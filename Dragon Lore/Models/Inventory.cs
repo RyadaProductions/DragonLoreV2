@@ -1,4 +1,4 @@
-﻿namespace Dragon_Lore.Models
+﻿namespace DragonLore.Models
 {
   public class Inventory
   {

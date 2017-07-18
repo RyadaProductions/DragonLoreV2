@@ -7,7 +7,7 @@
     <ProjectGuid>{1D4790FC-F33B-4BAA-9354-4E7155CF24F6}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Dragon_Lore</RootNamespace>
+    <RootNamespace>DragonLore</RootNamespace>
     <AssemblyName>Dragon Lore</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

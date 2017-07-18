@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Dragon_Lore.Models
+namespace DragonLore.Models
 {
   public class Serializing
   {

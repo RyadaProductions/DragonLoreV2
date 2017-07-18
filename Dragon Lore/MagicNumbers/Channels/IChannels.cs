@@ -1,4 +1,4 @@
-﻿namespace Dragon_Lore.MagicNumbers.Channels
+﻿namespace DragonLore.MagicNumbers.Channels
 {
   interface IChannels
   {

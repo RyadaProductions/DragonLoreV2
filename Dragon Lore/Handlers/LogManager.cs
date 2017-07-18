@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Dragon_Lore.Handlers
+namespace DragonLore.Handlers
 {
   public class LogManager
   {

@@ -1,7 +1,7 @@
 ﻿using Discord.Audio;
 using Discord.WebSocket;
-using Dragon_Lore.Handlers;
-using Dragon_Lore.Models;
+using DragonLore.Handlers;
+using DragonLore.Models;
 using Newtonsoft.Json;
 using QueryMaster.GameServer;
 using System;
@@ -10,15 +10,17 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Dragon_Lore.Services
+namespace DragonLore.Services
 {
   public class SaveLoadService
   {
-    private readonly List<string> roles = new List<string>() { "S1", "S2", "S3", "S4", "SE", "SEM", "GN1", "GN2", "GN3", "GNM", "MG1", "MG2", "MGE", "DMG", "LE", "LEM", "SMFC", "Global" };
+    private readonly List<string> _roles = new List<string>() { "S1", "S2", "S3", "S4", "SE", "SEM", "GN1", "GN2", "GN3", "GNM", "MG1", "MG2", "MGE", "DMG", "LE", "LEM", "SMFC", "Global" };
     private readonly Settings _settings;
+    private readonly string _saveFile;
 
     public SaveLoadService(Settings settings)
     {
+      _saveFile = Path.Combine(Environment.CurrentDirectory, "settings.json");
       _settings = settings;
     }
 
@@ -26,20 +28,20 @@ namespace Dragon_Lore.Services
     {
       try
       {
-        if (!File.Exists(Environment.CurrentDirectory + "\\settings.json"))
+        if (!File.Exists(_saveFile))
         {
           Console.WriteLine("No save file found, creating a new one.");
           SaveVars();
           return false;
         }
 
-        string input = File.ReadAllText(Environment.CurrentDirectory + "\\settings.json");
+        string input = File.ReadAllText(_saveFile);
         var service = JsonConvert.DeserializeObject<Serializing>(input);
 
         _settings.Ranks.Clear();
         _settings.Servers.Clear();
 
-        _settings.Ranks.AddRange(_settings.Client.Guilds.First().Roles.Where(gRole => roles.Contains(gRole.Name)));
+        _settings.Ranks.AddRange(_settings.Client.Guilds.First().Roles.Where(gRole => _roles.Contains(gRole.Name)));
 
         Parallel.ForEach(service.Servers, ip =>
         {
@@ -79,7 +81,7 @@ namespace Dragon_Lore.Services
         temp.LastValveRss = _settings.LastRSS["valve"];
 
         var savableOutput = JsonConvert.SerializeObject(temp);
-        File.WriteAllText(Environment.CurrentDirectory + "\\settings.json", savableOutput);
+        File.WriteAllText(_saveFile, savableOutput);
 
         Console.WriteLine("Saved successfully");
         return true;

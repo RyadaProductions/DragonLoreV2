@@ -1,13 +1,13 @@
 ﻿using Discord;
 using Discord.Commands;
-using Dragon_Lore.MagicNumbers.Channels;
-using Dragon_Lore.MagicNumbers.Roles;
+using DragonLore.MagicNumbers.Channels;
+using DragonLore.MagicNumbers.Roles;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Dragon_Lore.Preconditions
+namespace DragonLore.Preconditions
 {
   class RequireAdminPermission : PreconditionAttribute
   {

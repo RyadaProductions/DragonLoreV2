@@ -1,7 +1,7 @@
 ﻿using Discord.WebSocket;
-using Dragon_Lore.Handlers;
-using Dragon_Lore.MagicNumbers.Channels;
-using Dragon_Lore.Services;
+using DragonLore.Handlers;
+using DragonLore.MagicNumbers.Channels;
+using DragonLore.Services;
 using System;
 using System.Linq;
 using System.ServiceModel.Syndication;
@@ -9,9 +9,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using Microsoft.Extensions.DependencyInjection;
-using Dragon_Lore.Models;
+using DragonLore.Models;
 
-namespace Dragon_Lore.RSS
+namespace DragonLore.RSS
 {
   class MainRSS : IRSS
   {

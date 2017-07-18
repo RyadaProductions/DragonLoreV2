@@ -1,16 +1,16 @@
 ﻿using Discord;
 using Discord.WebSocket;
-using Dragon_Lore.Handlers;
-using Dragon_Lore.MagicNumbers.Channels;
-using Dragon_Lore.MagicNumbers.Roles;
-using Dragon_Lore.RSS;
-using Dragon_Lore.Services;
+using DragonLore.Handlers;
+using DragonLore.MagicNumbers.Channels;
+using DragonLore.MagicNumbers.Roles;
+using DragonLore.RSS;
+using DragonLore.Services;
 using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using Dragon_Lore.Models;
+using DragonLore.Models;
 
-namespace Dragon_Lore.Main
+namespace DragonLore.Main
 {
   class Events
   {

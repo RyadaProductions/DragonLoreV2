@@ -1,16 +1,16 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using Dragon_Lore.Handlers;
-using Dragon_Lore.Services;
+using DragonLore.Handlers;
+using DragonLore.Services;
 using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using Dragon_Lore.Models;
+using DragonLore.Models;
 
-namespace Dragon_Lore.Modules
+namespace DragonLore.Modules
 {
   public class HelpModule : ModuleBase<SocketCommandContext>
   {

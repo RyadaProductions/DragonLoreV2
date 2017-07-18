@@ -1,4 +1,4 @@
-﻿namespace Dragon_Lore
+﻿namespace DragonLore
 {
   class Program
   {

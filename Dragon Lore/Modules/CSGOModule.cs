@@ -1,16 +1,16 @@
 ﻿using Discord;
 using Discord.Commands;
-using Dragon_Lore.Handlers;
-using Dragon_Lore.MagicNumbers.Roles;
-using Dragon_Lore.Services;
+using DragonLore.Handlers;
+using DragonLore.MagicNumbers.Roles;
+using DragonLore.Services;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using Dragon_Lore.Models;
+using DragonLore.Models;
 
-namespace Dragon_Lore.Modules
+namespace DragonLore.Modules
 {
   public class CSGOModule : ModuleBase<SocketCommandContext>
   {

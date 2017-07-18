@@ -5,7 +5,7 @@ using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
 using Discord.Commands;
 
-namespace Dragon_Lore.Handlers
+namespace DragonLore.Handlers
 {
   public class BotMessageManager : IBotMessageManager
   {

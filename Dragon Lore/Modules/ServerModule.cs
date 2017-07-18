@@ -1,8 +1,8 @@
 ﻿using Discord;
 using Discord.Commands;
-using Dragon_Lore.Handlers;
-using Dragon_Lore.Preconditions;
-using Dragon_Lore.Services;
+using DragonLore.Handlers;
+using DragonLore.Preconditions;
+using DragonLore.Services;
 using QueryMaster.GameServer;
 using System;
 using System.Collections.Concurrent;
@@ -10,9 +10,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using Dragon_Lore.Models;
+using DragonLore.Models;
 
-namespace Dragon_Lore.Modules
+namespace DragonLore.Modules
 {
   public class ServerModule : ModuleBase<SocketCommandContext>
   {

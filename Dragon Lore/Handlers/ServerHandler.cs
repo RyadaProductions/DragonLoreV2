@@ -1,10 +1,10 @@
-﻿using Dragon_Lore.Models;
-using Dragon_Lore.Services;
+﻿using DragonLore.Models;
+using DragonLore.Services;
 using QueryMaster;
 using QueryMaster.GameServer;
 using System;
 
-namespace Dragon_Lore.Handlers
+namespace DragonLore.Handlers
 {
   public class ServerHandler
   {

@@ -1,17 +1,17 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using Dragon_Lore.Handlers;
-using Dragon_Lore.MagicNumbers.Channels;
-using Dragon_Lore.MagicNumbers.Roles;
-using Dragon_Lore.Models;
-using Dragon_Lore.Services;
+using DragonLore.Handlers;
+using DragonLore.MagicNumbers.Channels;
+using DragonLore.MagicNumbers.Roles;
+using DragonLore.Models;
+using DragonLore.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace Dragon_Lore.Main
+namespace DragonLore.Main
 {
   class Installer
   {

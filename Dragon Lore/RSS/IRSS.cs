@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Dragon_Lore.RSS
+namespace DragonLore.RSS
 {
   interface IRSS
   {

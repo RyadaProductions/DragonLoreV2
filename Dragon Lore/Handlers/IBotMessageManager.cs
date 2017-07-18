@@ -5,7 +5,7 @@ using Discord.WebSocket;
 using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
 
-namespace Dragon_Lore.Handlers
+namespace DragonLore.Handlers
 {
   public interface IBotMessageManager
   {

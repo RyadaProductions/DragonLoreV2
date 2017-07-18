@@ -2,11 +2,11 @@
 using Discord.Commands;
 using Discord.Net.Providers.WS4Net;
 using Discord.WebSocket;
-using Dragon_Lore.Main;
+using DragonLore.Main;
 using System;
 using System.Threading.Tasks;
 
-namespace Dragon_Lore
+namespace DragonLore
 {
   public class DragonLore
   {
@@ -17,10 +17,12 @@ namespace Dragon_Lore
     {
       Console.Title = "Dragon Lore V2.0";
 
-      _client = new DiscordSocketClient(new DiscordSocketConfig {
-        LogLevel = LogSeverity.Info,
-        WebSocketProvider = WS4NetProvider.Instance
-      });
+      _client = new DiscordSocketClient(
+        new DiscordSocketConfig
+        {
+          LogLevel = LogSeverity.Info,
+          WebSocketProvider = WS4NetProvider.Instance
+        });
     }
 
     public async Task Start()

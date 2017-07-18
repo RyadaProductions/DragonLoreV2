@@ -1,4 +1,4 @@
-﻿namespace Dragon_Lore.MagicNumbers.Roles
+﻿namespace DragonLore.MagicNumbers.Roles
 {
   public interface IRoles
   {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Dragon_Lore.MagicNumbers.Roles
+namespace DragonLore.MagicNumbers.Roles
 {
   class TestRoles : IRoles
   {

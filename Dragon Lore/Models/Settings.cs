@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using YoutubeExplode.Models;
 
-namespace Dragon_Lore.Models
+namespace DragonLore.Models
 {
   public class Settings
   {

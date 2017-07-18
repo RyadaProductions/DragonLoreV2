@@ -1,4 +1,4 @@
-﻿namespace Dragon_Lore.MagicNumbers.Channels
+﻿namespace DragonLore.MagicNumbers.Channels
 {
   class LiveChannels : IChannels
   {
