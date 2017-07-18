@@ -38,7 +38,8 @@ namespace DragonLore.Modules
         var info = new ServerHandler(_settings).GetServerInfo(ip);
         if (info != null)
         {
-          _settings.Servers.Add(ip);
+          _settings.Servers = _settings.Servers.Concat(new[] { ip });
+
           messageContent = $"**{info.Name}**\n has successfully been added to the server list. \n `ip: {info.Address}` || `ping: {info.Ping}`";
         }
         else
@@ -58,7 +59,7 @@ namespace DragonLore.Modules
       ip = _settings.Servers.FirstOrDefault(y => y == ip);
       if (ip != null)
       {
-        _settings.Servers.Remove(ip);
+        _settings.Servers = _settings.Servers.Except(new[] { ip });
         messageContent = $"removed server: {ip}";
       }
       else
@@ -76,7 +77,7 @@ namespace DragonLore.Modules
 
       var messageContent = "";
 
-      if (_settings.Servers.Count == 0)
+      if (_settings.Servers.Count() == 0)
         messageContent = "There are no servers registered";
       else
       {

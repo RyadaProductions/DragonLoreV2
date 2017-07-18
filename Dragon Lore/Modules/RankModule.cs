@@ -98,7 +98,7 @@ namespace DragonLore.Modules
     {
       string messageContent;
 
-      if (_settings.Ranks.Count == 0)
+      if (_settings.Ranks.Count() == 0)
         messageContent = "No ranks have been registered";
       else
       {
