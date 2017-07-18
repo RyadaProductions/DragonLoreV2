@@ -1,9 +1,9 @@
 ﻿using Discord.Commands;
 using DragonLore.Handlers;
-using System;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace DragonLore.Modules
 {
@@ -21,21 +21,23 @@ namespace DragonLore.Modules
     public async Task Fail()
     {
       string filePath = "";
-
       Random test = new Random();
       switch (test.Next(3))
       {
         case 0:
-          filePath = Path.Combine(Environment.CurrentDirectory, "Resources//Gifs//Fail//FeFailNade.gif");
+          filePath = Path.Combine(Environment.CurrentDirectory, "Resources", "Gifs", "Fail", "FeFailNade.gif");
           break;
+
         case 1:
-          filePath = Path.Combine(Environment.CurrentDirectory, "Resources//Gifs//Fail//KillTheDefuser.gif");
+          filePath = Path.Combine(Environment.CurrentDirectory, "Resources", "Gifs", "Fail", "KillTheDefuser.gif");
           break;
+
         case 2:
-          filePath = Path.Combine(Environment.CurrentDirectory, "Resources//Gifs//Fail//NadeTheAFK.gif");
+          filePath = Path.Combine(Environment.CurrentDirectory, "Resources", "Gifs", "Fail", "NadeTheAFK.gif");
           break;
+
         case 3:
-          filePath = Path.Combine(Environment.CurrentDirectory, "Resources//Gifs//Fail//DuckToDodge.gif");
+          filePath = Path.Combine(Environment.CurrentDirectory, "Resources", "Gifs", "Fail", "DuckToDodge.gif");
           break;
       }
       await Context.Channel.SendFileAsync(filePath);

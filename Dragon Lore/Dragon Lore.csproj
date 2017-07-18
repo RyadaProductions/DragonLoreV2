@@ -249,8 +249,8 @@
     <Compile Include="Modules\ServerModule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RSS\IRSS.cs" />
-    <Compile Include="RSS\MainRSS.cs" />
+    <Compile Include="RSS\IRssReader.cs" />
+    <Compile Include="RSS\RssReader.cs" />
     <Compile Include="Models\Inventory.cs" />
     <Compile Include="Models\Serializing.cs" />
     <Compile Include="Services\SaveLoadService.cs" />

@@ -2,13 +2,12 @@
 using Discord.Commands;
 using DragonLore.Handlers;
 using DragonLore.MagicNumbers.Roles;
-using DragonLore.Services;
+using DragonLore.Models;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using DragonLore.Models;
 
 namespace DragonLore.Modules
 {
@@ -33,11 +32,11 @@ namespace DragonLore.Modules
       System.Net.WebClient wc = new System.Net.WebClient();
       string webData = wc.DownloadString($"http://csgobackpack.net/api/GetInventoryValue/?id={steamID}");
       var inventoryData = JsonConvert.DeserializeObject<Inventory>(webData);
-      if (inventoryData.success)
-        messageContent = $"**Player:** {steamID}\n**Inventory value:** {inventoryData.value} {inventoryData.currency}\n**Items:** {inventoryData.items}";
+      if (inventoryData.Success)
+        messageContent = $"**Player:** {steamID}\n**Inventory value:** {inventoryData.Value} {inventoryData.Currency}\n**Items:** {inventoryData.Items}";
       else
         messageContent = "**Error** \nAre you sure you entered a correct steamID?\nYou can get your steamID from your profile url.";
-      
+
       await _botMessage.SendAndRemoveEmbed(messageContent, Context, user);
     }
 
@@ -60,6 +59,7 @@ namespace DragonLore.Modules
           else
             messageContent = "Already has the FaceIt role.";
           break;
+
         case "off":
           if (user.RoleIds.Contains(_roles.FaceIt))
           {
@@ -69,6 +69,7 @@ namespace DragonLore.Modules
           else
             messageContent = "Does not have the FaceIt role.";
           break;
+
         default:
           messageContent = "**Error** \nMake sure you specify if you want to put the FaceIt role on or off.";
           break;
@@ -90,11 +91,12 @@ namespace DragonLore.Modules
           if (!user.RoleIds.Contains(_roles.ESEA))
           {
             await user.AddRoleAsync(Context.Guild.GetRole(_roles.ESEA));
-            messageContent= "Now has the ESEA role.";
+            messageContent = "Now has the ESEA role.";
           }
           else
             messageContent = "Already has the ESEA role.";
           break;
+
         case "off":
           if (user.RoleIds.Contains(_roles.ESEA))
           {
@@ -104,6 +106,7 @@ namespace DragonLore.Modules
           else
             messageContent = "Does not have the ESEA role.";
           break;
+
         default:
           messageContent = "**Error** \nMake sure you specify if you want to put the ESEA role on or off.";
           break;

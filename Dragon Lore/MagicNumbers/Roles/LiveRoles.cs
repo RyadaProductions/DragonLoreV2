@@ -1,10 +1,10 @@
 ﻿namespace DragonLore.MagicNumbers.Roles
 {
-  class LiveRoles : IRoles
+  internal class LiveRoles : IRoles
   {
-    public ulong Music => 331530125395099651; 
+    public ulong Music => 331530125395099651;
 
-    public ulong Unranked => 282823369663971328; 
+    public ulong Unranked => 282823369663971328;
 
     public ulong ESEA => 285441890126397450;
 

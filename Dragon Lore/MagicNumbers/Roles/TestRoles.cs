@@ -2,7 +2,7 @@
 
 namespace DragonLore.MagicNumbers.Roles
 {
-  class TestRoles : IRoles
+  internal class TestRoles : IRoles
   {
     public ulong Admin => 280703635342622720;
 

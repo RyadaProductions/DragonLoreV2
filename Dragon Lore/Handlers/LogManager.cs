@@ -16,12 +16,15 @@ namespace DragonLore.Handlers
         case LogSeverity.Error:
           Console.ForegroundColor = ConsoleColor.Red;
           break;
+
         case LogSeverity.Warning:
           Console.ForegroundColor = ConsoleColor.Yellow;
           break;
+
         case LogSeverity.Info:
           Console.ForegroundColor = ConsoleColor.White;
           break;
+
         case LogSeverity.Verbose:
         case LogSeverity.Debug:
           Console.ForegroundColor = ConsoleColor.DarkGray;

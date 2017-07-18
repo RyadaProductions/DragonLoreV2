@@ -1,5 +1,4 @@
 ﻿using DragonLore.Models;
-using DragonLore.Services;
 using QueryMaster;
 using QueryMaster.GameServer;
 using System;
@@ -16,7 +15,7 @@ namespace DragonLore.Handlers
     }
 
     public ServerInfo GetServerInfo(string ip)
-    {      
+    {
       ushort port = 27015;
       if (ip.Contains(":"))
       {

@@ -1,10 +1,6 @@
 ﻿using Discord.Audio;
 using Discord.WebSocket;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using YoutubeExplode.Models;
 
 namespace DragonLore.Models
@@ -15,12 +11,12 @@ namespace DragonLore.Models
     //live server: 278487570806210571
     public readonly DiscordSocketClient Client;
 
-    public List<SocketRole> Ranks { get; } = new List<SocketRole>();
-    public List<string> Servers { get; } = new List<string>();
+    public IEnumerable<SocketRole> Ranks { get; set; } = new List<SocketRole>();
+    public IEnumerable<string> Servers { get; set; } = new List<string>();
 
     public bool IsWelcomeMessageOn { get; set; }
     public string WelcomeMessage { get; set; }
-    
+
     public string CurrentSong { get; set; }
     public IAudioClient VoiceClient { get; set; }
 

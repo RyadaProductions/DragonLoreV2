@@ -3,11 +3,10 @@ using Discord.Commands;
 using Discord.WebSocket;
 using DragonLore.Handlers;
 using DragonLore.MagicNumbers.Channels;
-using DragonLore.Services;
+using DragonLore.Models;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using DragonLore.Models;
 
 namespace DragonLore.Main
 {
@@ -55,7 +54,7 @@ namespace DragonLore.Main
       {
         await _logManager.Logger(new LogMessage(LogSeverity.Info, "Command", $"user: {message.Author} command: {message.Content}"));
         var context = new SocketCommandContext(_settings.Client, message);
-        
+
         var result = await _commands.ExecuteAsync(context, pos, _map);
 
         if (!result.IsSuccess)

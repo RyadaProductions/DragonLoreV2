@@ -2,7 +2,7 @@
 
 namespace DragonLore.RSS
 {
-  interface IRSS
+  internal interface IRssReader
   {
     Task NewsRSSAsync(string name, string url);
   }

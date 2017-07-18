@@ -1,6 +1,4 @@
-﻿using Discord.Audio;
-using Discord.WebSocket;
-using DragonLore.Handlers;
+﻿using DragonLore.Handlers;
 using DragonLore.Models;
 using Newtonsoft.Json;
 using QueryMaster.GameServer;
@@ -38,19 +36,19 @@ namespace DragonLore.Services
         string input = File.ReadAllText(_saveFile);
         var service = JsonConvert.DeserializeObject<Serializing>(input);
 
-        _settings.Ranks.Clear();
-        _settings.Servers.Clear();
+        _settings.Ranks = _settings.Client.Guilds.First().Roles.Where(gRole => _roles.Contains(gRole.Name));
 
-        _settings.Ranks.AddRange(_settings.Client.Guilds.First().Roles.Where(gRole => _roles.Contains(gRole.Name)));
+        var serversToAdd = new List<string>();
 
         Parallel.ForEach(service.Servers, ip =>
         {
           ServerInfo info = new ServerHandler(_settings).GetServerInfo(ip);
           if (info != null && !_settings.Servers.Contains(ip))
           {
-            _settings.Servers.Add(ip);
+            serversToAdd.Add(ip);
           }
         });
+        _settings.Servers = serversToAdd;
 
         _settings.IsWelcomeMessageOn = service.WelcomeBool;
         _settings.WelcomeMessage = service.WelcomeMessage;
@@ -71,7 +69,6 @@ namespace DragonLore.Services
     {
       try
       {
-
         Serializing temp = new Serializing();
         temp.Servers = _settings.Servers;
         temp.WelcomeBool = _settings.IsWelcomeMessageOn;

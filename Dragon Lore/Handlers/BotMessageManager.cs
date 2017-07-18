@@ -1,9 +1,9 @@
 ﻿using Discord;
+using Discord.Commands;
 using Discord.Rest;
 using Discord.WebSocket;
 using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
-using Discord.Commands;
 
 namespace DragonLore.Handlers
 {
@@ -115,9 +115,11 @@ namespace DragonLore.Handlers
             embed.WithDescription(newsItem.Summary.Text.Substring(startPos, length));
           }
           break;
+
         case "HLTV News":
           embed.WithDescription("Click the title to find out more.");
           break;
+
         case "Counter-strike.net":
           embed.WithDescription(newsItem.Summary.Text.Replace("&#8211;", "\n-"));
           if (newsItem.Summary.Text.Length > 1700)

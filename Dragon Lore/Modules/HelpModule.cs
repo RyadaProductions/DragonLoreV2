@@ -1,14 +1,12 @@
 ﻿using Discord;
 using Discord.Commands;
-using Discord.WebSocket;
 using DragonLore.Handlers;
-using DragonLore.Services;
+using DragonLore.Models;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using DragonLore.Models;
 
 namespace DragonLore.Modules
 {
@@ -24,14 +22,15 @@ namespace DragonLore.Modules
       _commandService = map.GetService<CommandService>();
       _botMessage = map.GetService<IBotMessageManager>();
     }
-    
+
     [Command("Help", RunMode = RunMode.Async)]
     [Summary("List all commands")]
     public async Task Help()
     {
       var user = Context.Message.Author;
       // Check if the user has any rank registered to him from the List<>ranks and remove them.
-      var builder = new EmbedBuilder() {
+      var builder = new EmbedBuilder()
+      {
         Color = new Color(9912378),
         Description = "These are the commands you can use:"
       };
@@ -56,14 +55,16 @@ namespace DragonLore.Modules
         }
         if (!string.IsNullOrWhiteSpace(description))
         {
-          builder.AddField(x => {
+          builder.AddField(x =>
+          {
             x.Name = module.Name;
             x.Value = description;
             x.IsInline = false;
           });
         }
       }
-      builder.AddField(x => {
+      builder.AddField(x =>
+      {
         x.Name = "Where can I use those commands?";
         x.Value = "Please use all commands inside the CSHub discord, since I won't reply or react to DM's";
       });
@@ -72,7 +73,7 @@ namespace DragonLore.Modules
       var messageContext = "Send you a DM <:csgochicken:306772928626950146> ";
       await _botMessage.SendAndRemoveEmbed(messageContext, Context);
     }
-    
+
     [Command("Info", RunMode = RunMode.Async)]
     [Summary("Output Info")]
     public async Task Info()

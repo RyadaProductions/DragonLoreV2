@@ -2,9 +2,9 @@
 {
   public class Inventory
   {
-    public bool success { get; set; }
-    public string value { get; set; }
-    public string items { get; set; }
-    public string currency { get; set; }
+    public bool Success { get; set; }
+    public string Value { get; set; }
+    public string Items { get; set; }
+    public string Currency { get; set; }
   }
 }

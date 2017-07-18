@@ -1,16 +1,15 @@
 ﻿using Discord;
 using Discord.Commands;
 using DragonLore.Handlers;
+using DragonLore.Models;
 using DragonLore.Preconditions;
-using DragonLore.Services;
+using Microsoft.Extensions.DependencyInjection;
 using QueryMaster.GameServer;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using DragonLore.Models;
 
 namespace DragonLore.Modules
 {
@@ -74,7 +73,7 @@ namespace DragonLore.Modules
     public async Task GenerateServerList()
     {
       var user = Context.Message.Author as IGuildUser;
-      
+
       var messageContent = "";
 
       if (_settings.Servers.Count == 0)
@@ -83,7 +82,7 @@ namespace DragonLore.Modules
       {
         var onlineServerList = new ConcurrentBag<string>();
         var offlineServerList = new ConcurrentBag<string>();
-        Parallel.ForEach(_settings.Servers, serverIP => 
+        Parallel.ForEach(_settings.Servers, serverIP =>
         {
           ServerInfo serverInfo = new ServerHandler(_settings).GetServerInfo(serverIP);
           if (serverInfo != null)

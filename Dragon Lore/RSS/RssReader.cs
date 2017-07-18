@@ -1,19 +1,19 @@
 ﻿using Discord.WebSocket;
 using DragonLore.Handlers;
 using DragonLore.MagicNumbers.Channels;
+using DragonLore.Models;
 using DragonLore.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
-using Microsoft.Extensions.DependencyInjection;
-using DragonLore.Models;
 
 namespace DragonLore.RSS
 {
-  class MainRSS : IRSS
+  internal class RssReader : IRssReader
   {
     private readonly Settings _settings;
     private readonly SaveLoadService _saveLoadService;
@@ -24,7 +24,7 @@ namespace DragonLore.RSS
 
     private string _rss = "gosu";
 
-    public MainRSS(IServiceProvider map)
+    public RssReader(IServiceProvider map)
     {
       _settings = map.GetService<Settings>();
       _saveLoadService = map.GetService<SaveLoadService>();
@@ -43,10 +43,12 @@ namespace DragonLore.RSS
           await NewsRSSAsync("GosuGamers News", "http://www.gosugamers.net/counterstrike/news/rss");
           _rss = "hltv";
           break;
+
         case "hltv":
           await NewsRSSAsync("HLTV News", "http://www.hltv.org/news.rss.php");
           _rss = "valve";
           break;
+
         case "valve":
           await NewsRSSAsync("Counter-strike.net", "http://blog.counter-strike.net/index.php/feed/");
           _rss = "gosu";

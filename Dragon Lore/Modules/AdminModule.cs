@@ -2,12 +2,12 @@
 using Discord.Commands;
 using Discord.WebSocket;
 using DragonLore.Handlers;
+using DragonLore.Models;
 using DragonLore.Preconditions;
 using DragonLore.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using DragonLore.Models;
 
 namespace DragonLore.Modules
 {
@@ -38,11 +38,13 @@ namespace DragonLore.Modules
             messageContent = "Settings Loaded";
           else messageContent = "An error occured while loading settings";
           break;
+
         case "save":
           if (_saveLoadService.SaveVars())
             messageContent = "Settings Saved";
           else messageContent = "An error occured while loading settings";
           break;
+
         default:
           messageContent = "please specify if i need to load or save";
           break;
@@ -114,10 +116,12 @@ namespace DragonLore.Modules
           _settings.IsWelcomeMessageOn = true;
           messageContent = $"welcome message has been turned on";
           break;
+
         case "off":
           _settings.IsWelcomeMessageOn = false;
           messageContent = $"welcome message has been turned off";
           break;
+
         default:
           messageContent = $"welcome message is: { (_settings.IsWelcomeMessageOn ? "On" : "Off")}";
           break;

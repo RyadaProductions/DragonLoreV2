@@ -3,16 +3,16 @@ using Discord.WebSocket;
 using DragonLore.Handlers;
 using DragonLore.MagicNumbers.Channels;
 using DragonLore.MagicNumbers.Roles;
+using DragonLore.Models;
 using DragonLore.RSS;
 using DragonLore.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using DragonLore.Models;
 
 namespace DragonLore.Main
 {
-  class Events
+  internal class Events
   {
     private readonly SaveLoadService _saveLoadService;
     private readonly Settings _settings;
@@ -38,7 +38,7 @@ namespace DragonLore.Main
 
     public async Task Connected()
     {
-      IRSS mainRSS = new MainRSS(_map);
+      IRssReader mainRSS = new RssReader(_map);
       if (_saveLoadService.LoadVars())
         Console.WriteLine("Settings loaded succesfully.");
       else

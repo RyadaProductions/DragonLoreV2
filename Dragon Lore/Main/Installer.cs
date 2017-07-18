@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace DragonLore.Main
 {
-  class Installer
+  internal class Installer
   {
     private readonly DiscordSocketClient _client;
 
@@ -22,7 +22,6 @@ namespace DragonLore.Main
     private readonly Settings _settings;
 
     private IServiceProvider _map;
-
 
     public Installer(DiscordSocketClient client)
     {
