@@ -32,7 +32,7 @@ namespace Dragon_Lore.RSS
       _botMessage = map.GetService<BotMessageManager>();
       _channels = map.GetService<IChannels>();
 
-      //_rssTimer = new Timer(async (e) => { await RSSTimerCallback(); }, null, 0, 5000);
+      _rssTimer = new Timer(async (e) => { await RSSTimerCallback(); }, null, 0, 5000);
     }
 
     private async Task RSSTimerCallback()
