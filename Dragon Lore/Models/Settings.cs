@@ -1,7 +1,6 @@
 ﻿using Discord.Audio;
 using Discord.WebSocket;
 using System.Collections.Generic;
-using YoutubeExplode.Models;
 
 namespace DragonLore.Models
 {
@@ -27,7 +26,7 @@ namespace DragonLore.Models
       ["valve"] = ""
     };
 
-    public Dictionary<string, VideoInfo> Songs { get; set; } = new Dictionary<string, VideoInfo>();
+    public Dictionary<string, string> Songs { get; set; } = new Dictionary<string, string>();
 
     public Settings(DiscordSocketClient client)
     {

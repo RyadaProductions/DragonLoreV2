@@ -1,13 +1,15 @@
-﻿namespace DragonLore.MagicNumbers.Roles
+﻿using Discord.WebSocket;
+
+namespace DragonLore.MagicNumbers.Roles
 {
   public interface IRoles
   {
-    ulong Admin { get; }
-    ulong Music { get; }
+    SocketRole Admin { get; set; }
+    SocketRole Music { get; set; }
 
-    ulong Unranked { get; }
+    SocketRole Unranked { get; set; }
 
-    ulong ESEA { get; }
-    ulong FaceIt { get; }
+    SocketRole ESEA { get; set; }
+    SocketRole FaceIt { get; set; }
   }
 }

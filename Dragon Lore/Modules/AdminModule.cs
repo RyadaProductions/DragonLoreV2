@@ -1,7 +1,7 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using DragonLore.Handlers;
+using DragonLore.Managers;
 using DragonLore.Models;
 using DragonLore.Preconditions;
 using DragonLore.Services;
@@ -58,7 +58,7 @@ namespace DragonLore.Modules
     [RequireAdminPermission]
     public async Task KickUser([Summary("@username")] IGuildUser username, [Remainder, Summary("the reason you kick somebody")] string reason)
     {
-      var user = Context.Message.Author as IGuildUser;
+      var user = Context.Message.Author as SocketGuildUser;
 
       var embed = _botMessage.GenerateEmbedAsync($"You have been kicked from: {Context.Guild.Name}\nBy:{user.Username}\nReason:\n{reason}");
       await _botMessage.DirectMessageUserAsync("", username as SocketUser, embed);
@@ -73,7 +73,7 @@ namespace DragonLore.Modules
     [RequireAdminPermission]
     public async Task BanUser([Summary("@username")] IGuildUser username, [Summary("the amount of days to ban the user")] string prune, [Remainder, Summary("the reason you ban somebody")] string reason)
     {
-      var user = Context.Message.Author as IGuildUser;
+      var user = Context.Message.Author as SocketGuildUser;
       var pruneInt = Int32.Parse(prune);
 
       var embed = _botMessage.GenerateEmbedAsync($"You have been banned from: **{Context.Guild.Name}**\n**By:** {user.Username}\n**Time untill unban:** {prune}\n**Reason:**\n{reason}");
@@ -89,7 +89,7 @@ namespace DragonLore.Modules
     [RequireAdminPermission]
     public async Task ChangeWelcomeMessage([Remainder, Summary("message to set")] string welcomeMessage = "")
     {
-      var user = Context.Message.Author as IGuildUser;
+      var user = Context.Message.Author as SocketGuildUser;
       string messageContent;
 
       if (welcomeMessage != "")
@@ -107,7 +107,7 @@ namespace DragonLore.Modules
     [RequireAdminPermission]
     public async Task WelcomeState([Summary("turn it on or off")] string enable = "")
     {
-      var user = Context.Message.Author as IGuildUser;
+      var user = Context.Message.Author as SocketGuildUser;
       string messageContent;
 
       switch (enable)

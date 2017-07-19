@@ -1,4 +1,4 @@
-﻿using DragonLore.Handlers;
+﻿using DragonLore.Managers;
 using DragonLore.Models;
 using Newtonsoft.Json;
 using QueryMaster.GameServer;
@@ -12,8 +12,8 @@ namespace DragonLore.Services
 {
   public class SaveLoadService
   {
-    private readonly List<string> _roles = new List<string>() { "S1", "S2", "S3", "S4", "SE", "SEM", "GN1", "GN2", "GN3", "GNM", "MG1", "MG2", "MGE", "DMG", "LE", "LEM", "SMFC", "Global" };
     private readonly Settings _settings;
+    private readonly List<string> _roles = new List<string>() { "S1", "S2", "S3", "S4", "SE", "SEM", "GN1", "GN2", "GN3", "GNM", "MG1", "MG2", "MGE", "DMG", "LE", "LEM", "SMFC", "Global" };
     private readonly string _saveFile;
 
     public SaveLoadService(Settings settings)
@@ -42,7 +42,7 @@ namespace DragonLore.Services
 
         Parallel.ForEach(service.Servers, ip =>
         {
-          ServerInfo info = new ServerHandler(_settings).GetServerInfo(ip);
+          ServerInfo info = new CsgoServerService(_settings).GetServerInfo(ip);
           if (info != null && !_settings.Servers.Contains(ip))
           {
             serversToAdd.Add(ip);

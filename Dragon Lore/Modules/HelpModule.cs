@@ -1,6 +1,6 @@
 ﻿using Discord;
 using Discord.Commands;
-using DragonLore.Handlers;
+using DragonLore.Managers;
 using DragonLore.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System;

@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Discord.Commands;
-using DragonLore.Handlers;
+using Discord.WebSocket;
+using DragonLore.Managers;
 using DragonLore.Models;
 using DragonLore.Preconditions;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,7 +36,7 @@ namespace DragonLore.Modules
         messageContent = $"serverlist already contains {ip}";
       else
       {
-        var info = new ServerHandler(_settings).GetServerInfo(ip);
+        var info = new CsgoServerService(_settings).GetServerInfo(ip);
         if (info != null)
         {
           _settings.Servers = _settings.Servers.Concat(new[] { ip });
@@ -73,7 +74,7 @@ namespace DragonLore.Modules
     [Alias("Serverlist")]
     public async Task GenerateServerList()
     {
-      var user = Context.Message.Author as IGuildUser;
+      var user = Context.Message.Author as SocketGuildUser;
 
       var messageContent = "";
 
@@ -85,7 +86,7 @@ namespace DragonLore.Modules
         var offlineServerList = new ConcurrentBag<string>();
         Parallel.ForEach(_settings.Servers, serverIP =>
         {
-          ServerInfo serverInfo = new ServerHandler(_settings).GetServerInfo(serverIP);
+          ServerInfo serverInfo = new CsgoServerService(_settings).GetServerInfo(serverIP);
           if (serverInfo != null)
           {
             var serverString = $"**{serverInfo.Name}**\n `ip: {serverInfo.Address}` || `Ping: {serverInfo.Ping}ms` || `Players: {serverInfo.Players}/{serverInfo.MaxPlayers}` || `Map: {serverInfo.Map}`\n";

@@ -5,7 +5,7 @@ using Discord.WebSocket;
 using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
 
-namespace DragonLore.Handlers
+namespace DragonLore.Managers
 {
   public class BotMessageManager : IBotMessageManager
   {
@@ -34,14 +34,14 @@ namespace DragonLore.Handlers
 
     public async Task RemoveCommandMessageAsync(SocketMessage message, ISocketMessageChannel channel)
     {
-      // Wait 2 seconds before deleting
+      // Wait 5 seconds before deleting
       await Task.Delay(5000);
       await message.DeleteAsync();
     }
 
     public async Task RemoveCommandAndBotMessageAsync(SocketMessage message, ISocketMessageChannel channel, RestUserMessage botmessage = null)
     {
-      // Wait 2 seconds before deleting
+      // Wait 5 seconds before deleting
       await Task.Delay(5000);
       await message.DeleteAsync();
 

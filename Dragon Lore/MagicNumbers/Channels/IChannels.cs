@@ -1,6 +1,6 @@
 ﻿namespace DragonLore.MagicNumbers.Channels
 {
-  internal interface IChannels
+  public interface IChannels
   {
     ulong NewsChannel { get; }
     ulong AdminChannel { get; }

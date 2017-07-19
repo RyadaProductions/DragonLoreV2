@@ -1,6 +1,6 @@
 ﻿using Discord;
 using Discord.Commands;
-using DragonLore.Handlers;
+using DragonLore.Managers;
 using DragonLore.MagicNumbers.Roles;
 using DragonLore.Models;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Discord.WebSocket;
 
 namespace DragonLore.Modules
 {
@@ -26,7 +27,7 @@ namespace DragonLore.Modules
     [Summary("Get inventory value of player")]
     public async Task Inventory(string steamID)
     {
-      var user = Context.Message.Author as IGuildUser;
+      var user = Context.Message.Author as SocketGuildUser;
       string messageContent;
 
       System.Net.WebClient wc = new System.Net.WebClient();
@@ -45,15 +46,15 @@ namespace DragonLore.Modules
     public async Task Faceit(string state = "on")
     {
       // FaceIt role ID      285441809709137921
-      var user = Context.Message.Author as IGuildUser;
+      var user = Context.Message.Author as SocketGuildUser;
       string messageContent;
 
       switch (state.ToLower())
       {
         case "on":
-          if (!user.RoleIds.Contains(_roles.FaceIt))
+          if (!user.Roles.Contains(_roles.FaceIt))
           {
-            await user.AddRoleAsync(Context.Guild.GetRole(_roles.FaceIt));
+            await user.AddRoleAsync(_roles.FaceIt);
             messageContent = "Now has the FaceIt role.";
           }
           else
@@ -61,9 +62,9 @@ namespace DragonLore.Modules
           break;
 
         case "off":
-          if (user.RoleIds.Contains(_roles.FaceIt))
+          if (user.Roles.Contains(_roles.FaceIt))
           {
-            await user.RemoveRoleAsync(Context.Guild.GetRole(_roles.FaceIt));
+            await user.RemoveRoleAsync(_roles.FaceIt);
             messageContent = "Removed the FaceIt role";
           }
           else
@@ -82,15 +83,15 @@ namespace DragonLore.Modules
     public async Task Esea(string state = "on")
     {
       // ESEA role ID      285441890126397450
-      var user = Context.Message.Author as IGuildUser;
+      var user = Context.Message.Author as SocketGuildUser;
       string messageContent;
 
       switch (state.ToLower())
       {
         case "on":
-          if (!user.RoleIds.Contains(_roles.ESEA))
+          if (!user.Roles.Contains(_roles.ESEA))
           {
-            await user.AddRoleAsync(Context.Guild.GetRole(_roles.ESEA));
+            await user.AddRoleAsync(_roles.ESEA);
             messageContent = "Now has the ESEA role.";
           }
           else
@@ -98,9 +99,9 @@ namespace DragonLore.Modules
           break;
 
         case "off":
-          if (user.RoleIds.Contains(_roles.ESEA))
+          if (user.Roles.Contains(_roles.ESEA))
           {
-            await user.RemoveRoleAsync(Context.Guild.GetRole(_roles.ESEA));
+            await user.RemoveRoleAsync(_roles.ESEA);
             messageContent = "Removed the ESEA role";
           }
           else

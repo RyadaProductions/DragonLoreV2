@@ -1,5 +1,6 @@
 ﻿using Discord;
 using Discord.Commands;
+using Discord.WebSocket;
 using DragonLore.MagicNumbers.Channels;
 using DragonLore.MagicNumbers.Roles;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,9 +24,9 @@ namespace DragonLore.Preconditions
         _channels = services.GetService<IChannels>();
         _roles = services.GetService<IRoles>();
 
-        var user = context.Message.Author as IGuildUser;
+        var user = context.Message.Author as SocketGuildUser;
 
-        if (user.RoleIds.Contains(_roles.Admin))
+        if (user.Roles.Contains(_roles.Admin))
         {
           if (context.Channel.Id == _channels.AdminChannel)
             return await Task.FromResult(PreconditionResult.FromSuccess());

@@ -1,6 +1,6 @@
 ﻿using Discord;
 using Discord.WebSocket;
-using DragonLore.Handlers;
+using DragonLore.Managers;
 using DragonLore.MagicNumbers.Channels;
 using DragonLore.MagicNumbers.Roles;
 using DragonLore.Models;
@@ -38,20 +38,27 @@ namespace DragonLore.Main
 
     public async Task Connected()
     {
-      IRssReader mainRSS = new RssReader(_map);
-      if (_saveLoadService.LoadVars())
-        Console.WriteLine("Settings loaded succesfully.");
-      else
-        Console.WriteLine("Error loading Settings, this is normal if it is a fresh installation.");
-      _settings.Client.Connected -= Connected;
+      try
+      {
+        IRssReader mainRSS = new RssReader(_map.GetService<RssService>());
+
+        if (_saveLoadService.LoadVars())
+          Console.WriteLine("Settings loaded succesfully.");
+        else
+          Console.WriteLine("Error loading Settings, this is normal if it is a fresh installation.");
+        _settings.Client.Connected -= Connected;
+      } catch (Exception e)
+      {
+        Console.WriteLine(e);
+      }
     }
 
     public async Task WelcomeHandler(SocketGuildUser arg)
     {
-      var user = arg as IGuildUser;
+      var user = arg;
       if (user == null) return;
 
-      await user.AddRoleAsync(user.Guild.GetRole(_roles.Unranked));
+      await user.AddRoleAsync(_roles.Unranked);
 
       if (!_settings.IsWelcomeMessageOn || _settings.WelcomeMessage == "") return;
       await _botMessage.DirectMessageUserEmbedAsync(_settings.WelcomeMessage, user);
@@ -60,8 +67,8 @@ namespace DragonLore.Main
     public async Task UserVoiceStateUpdated(SocketUser user, SocketVoiceState voiceBefore, SocketVoiceState voiceAfter)
     {
       var guildUser = user as SocketGuildUser;
-      if (voiceAfter.VoiceChannel.Id == _channels.MusicChannel) await guildUser.AddRoleAsync(guildUser.Guild.GetRole(_roles.Music));
-      else await guildUser.RemoveRoleAsync(guildUser.Guild.GetRole(_roles.Music));
+      if (voiceAfter.VoiceChannel.Id == _channels.MusicChannel) await guildUser.AddRoleAsync(_roles.Music);
+      else await guildUser.RemoveRoleAsync(_roles.Music);
     }
 
     public async Task CmdHandler(SocketMessage arg)

@@ -1,9 +1,4 @@
-﻿using Discord.WebSocket;
-using DragonLore.Handlers;
-using DragonLore.MagicNumbers.Channels;
-using DragonLore.Models;
-using DragonLore.Services;
-using Microsoft.Extensions.DependencyInjection;
+﻿using DragonLore.Services;
 using System;
 using System.Linq;
 using System.ServiceModel.Syndication;
@@ -15,22 +10,15 @@ namespace DragonLore.RSS
 {
   internal class RssReader : IRssReader
   {
-    private readonly Settings _settings;
-    private readonly SaveLoadService _saveLoadService;
-    private readonly IBotMessageManager _botMessage;
-    private readonly IChannels _channels;
+    private readonly RssService _service;
 
     private readonly Timer _rssTimer;
 
     private string _rss = "gosu";
 
-    public RssReader(IServiceProvider map)
+    public RssReader(RssService service)
     {
-      _settings = map.GetService<Settings>();
-      _saveLoadService = map.GetService<SaveLoadService>();
-
-      _botMessage = map.GetService<BotMessageManager>();
-      _channels = map.GetService<IChannels>();
+      _service = service;
 
       _rssTimer = new Timer(async (e) => { await RSSTimerCallback(); }, null, 0, 5000);
     }
@@ -56,7 +44,7 @@ namespace DragonLore.RSS
       }
     }
 
-    public async Task NewsRSSAsync(string name, string url)
+    public async Task NewsRSSAsync(string source, string url)
     {
       try
       {
@@ -68,20 +56,13 @@ namespace DragonLore.RSS
           rssFormatter.ReadFrom(xmlReader);
         }
 
-        var channel = _settings.Client.GetChannel(_channels.NewsChannel) as ISocketMessageChannel;
+        var news = rssFormatter.Feed.Items.First();
 
-        string newest = rssFormatter.Feed.Items.First().Id.ToString();
-
-        if (_settings.LastRSS[_rss] != newest)
-        {
-          await _botMessage.SendNewsEmbed(name, rssFormatter.Feed.Items.First(), channel);
-          _settings.LastRSS[_rss] = newest;
-          _saveLoadService.SaveVars();
-        }
+        await _service.CheckNewRss(_rss, source, news);
       }
       catch (Exception ex)
       {
-        Console.WriteLine(name + ex);
+        Console.WriteLine(source + ex);
       }
     }
   }

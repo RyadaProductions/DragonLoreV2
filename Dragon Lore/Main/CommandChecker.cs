@@ -1,7 +1,7 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using DragonLore.Handlers;
+using DragonLore.Managers;
 using DragonLore.MagicNumbers.Channels;
 using DragonLore.Models;
 using Microsoft.Extensions.DependencyInjection;

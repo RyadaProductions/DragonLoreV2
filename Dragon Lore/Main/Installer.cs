@@ -1,7 +1,7 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using DragonLore.Handlers;
+using DragonLore.Managers;
 using DragonLore.MagicNumbers.Channels;
 using DragonLore.MagicNumbers.Roles;
 using DragonLore.Models;
@@ -45,7 +45,9 @@ namespace DragonLore.Main
       map.AddSingleton(_settings);
       map.AddSingleton(_commands);
       map.AddSingleton(_logManager);
-      map.AddSingleton(new SaveLoadService(_settings));
+
+      map.AddTransient<SaveLoadService, SaveLoadService>();
+      map.AddTransient<RssService, RssService>();
 
       map.AddTransient<LogManager, LogManager>();
       map.AddTransient<IBotMessageManager, BotMessageManager>();

@@ -1,6 +1,5 @@
 ﻿using Discord;
 using Discord.Commands;
-using Discord.Net.Providers.WS4Net;
 using Discord.WebSocket;
 using DragonLore.Main;
 using System;
@@ -21,7 +20,7 @@ namespace DragonLore
         new DiscordSocketConfig
         {
           LogLevel = LogSeverity.Info,
-          WebSocketProvider = WS4NetProvider.Instance
+          //WebSocketProvider = WS4NetProvider.Instance
         });
     }
 

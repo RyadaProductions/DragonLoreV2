@@ -3,13 +3,13 @@ using QueryMaster;
 using QueryMaster.GameServer;
 using System;
 
-namespace DragonLore.Handlers
+namespace DragonLore.Managers
 {
-  public class ServerHandler
+  public class CsgoServerService
   {
     private readonly Settings _settings;
 
-    public ServerHandler(Settings settings)
+    public CsgoServerService(Settings settings)
     {
       _settings = settings;
     }

@@ -1,7 +1,7 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using DragonLore.Handlers;
+using DragonLore.Managers;
 using DragonLore.MagicNumbers.Roles;
 using DragonLore.Models;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,7 +37,7 @@ namespace DragonLore.Modules
       }
 
       SocketRole oldRole = null;
-      var user = Context.Message.Author as IGuildUser;
+      var user = Context.Message.Author as SocketGuildUser;
 
       // Check if the rank exists
       var newRole = _settings.Ranks.FirstOrDefault(x => x.Name.ToLower() == newRank.ToLower());
@@ -48,15 +48,15 @@ namespace DragonLore.Modules
       }
 
       // Check if the rank that the user wants to add, is registered and if he does not already have that role
-      if (!user.RoleIds.Contains(newRole.Id))
+      if (!user.Roles.Contains(newRole))
       {
         // check if there is a rank that needs to be removed from the user to make sure they always have 1 rank
         // magicnumber is the Unranked ID
-        if (user.RoleIds.Contains(_roles.Unranked))
-          oldRole = (Context.Guild.GetRole(_roles.Unranked));
+        if (user.Roles.Contains(_roles.Unranked))
+          oldRole = _roles.Unranked;
         else
         {
-          var oldRank = _settings.Ranks.FirstOrDefault(Rank => user.RoleIds.Contains(Rank.Id));
+          var oldRank = _settings.Ranks.FirstOrDefault(Rank => user.Roles.Contains(Rank));
           if (oldRank != null)
             oldRole = oldRank;
         }
@@ -75,13 +75,13 @@ namespace DragonLore.Modules
     [Alias("Unranked")]
     public async Task GiveDefaultRank()
     {
-      var user = Context.Message.Author as IGuildUser;
+      var user = Context.Message.Author as SocketGuildUser;
       string messageContent;
 
-      var rank = _settings.Ranks.FirstOrDefault(role => user.RoleIds.Contains(role.Id));
+      var rank = _settings.Ranks.FirstOrDefault(role => user.Roles.Contains(role));
       if (rank != null)
       {
-        await user.AddRoleAsync(Context.Guild.GetRole(_roles.Unranked));
+        await user.AddRoleAsync(_roles.Unranked);
         await user.RemoveRoleAsync(rank);
         messageContent = "is now unranked";
       }

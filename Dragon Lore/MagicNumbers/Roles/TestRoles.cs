@@ -1,17 +1,39 @@
 ﻿using System;
+using Discord.WebSocket;
+using System.Linq;
+using DragonLore.Models;
 
 namespace DragonLore.MagicNumbers.Roles
 {
   internal class TestRoles : IRoles
   {
-    public ulong Admin => 280703635342622720;
+    private ulong AdminId => 280703635342622720;
 
-    public ulong Music => 331398290421710849;
+    private ulong MusicId => 331398290421710849;
 
-    public ulong Unranked => throw new NotImplementedException();
+    private ulong UnrankedId => throw new NotImplementedException();
 
-    public ulong ESEA => throw new NotImplementedException();
+    private ulong ESEAId => throw new NotImplementedException();
 
-    public ulong FaceIt => throw new NotImplementedException();
+    private ulong FaceItId => throw new NotImplementedException();
+
+    public SocketRole Admin { get; set; }
+    public SocketRole Music { get; set; }
+    public SocketRole Unranked { get; set; }
+    public SocketRole ESEA { get; set; }
+    public SocketRole FaceIt { get; set; }
+
+    public TestRoles(Settings settings)
+    {
+      var client = settings.Client;
+
+      if (client.Guilds.Count < 1) return;
+
+      Admin = client.Guilds.First().GetRole(AdminId);
+      Music = client.Guilds.First().GetRole(MusicId);
+      //Unranked = client.Guilds.First().GetRole(UnrankedId);
+      //ESEA = client.Guilds.First().GetRole(ESEAId);
+      //FaceIt = client.Guilds.First().GetRole(FaceItId);
+    }
   }
 }

@@ -1,5 +1,5 @@
 ﻿using Discord.Commands;
-using DragonLore.Handlers;
+using DragonLore.Managers;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;
