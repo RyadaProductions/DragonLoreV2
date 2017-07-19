@@ -20,7 +20,7 @@ namespace DragonLore.RSS
     {
       _service = service;
 
-      _rssTimer = new Timer(async (e) => { await RSSTimerCallback(); }, null, 0, 5000);
+      //_rssTimer = new Timer(async (e) => { await RSSTimerCallback(); }, null, 0, 5000);
     }
 
     private async Task RSSTimerCallback()

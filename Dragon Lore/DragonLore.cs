@@ -19,8 +19,7 @@ namespace DragonLore
       _client = new DiscordSocketClient(
         new DiscordSocketConfig
         {
-          LogLevel = LogSeverity.Info,
-          //WebSocketProvider = WS4NetProvider.Instance
+          LogLevel = LogSeverity.Info
         });
     }
 
