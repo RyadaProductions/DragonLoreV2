@@ -40,7 +40,7 @@ namespace DragonLore.Main
 
     public async Task ConnectedToGuild(SocketGuild arg)
     {
-      if (_saveLoadService.LoadVars())
+      if (await _saveLoadService.LoadVarsAsync())
         await _logManager.Logger(new LogMessage(LogSeverity.Info, "Settings", "Settings loaded succesfully."));
       else
         await _logManager.Logger(new LogMessage(LogSeverity.Warning, "Settings", "Error loading Settings, this is normal if it is a fresh installation."));

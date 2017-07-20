@@ -23,7 +23,7 @@ namespace DragonLore.Services
       _settings = settings;
     }
 
-    public bool LoadVars()
+    public async Task<bool> LoadVarsAsync()
     {
       try
       {
@@ -39,7 +39,8 @@ namespace DragonLore.Services
 
         var serversToAdd = new List<string>();
 
-        Parallel.ForEach(service.Servers, async (ip) =>
+
+        var Tasks = _settings.Servers.Select(async (ip) =>
         {
           ServerQueryInfo info = await new CsgoServerService(_settings).GetServerInfo(ip);
           if (info != null && !_settings.Servers.Contains(ip))
@@ -47,6 +48,8 @@ namespace DragonLore.Services
             serversToAdd.Add(ip);
           }
         });
+        await Task.WhenAll(Tasks);
+
         _settings.Servers = serversToAdd;
 
         _settings.IsWelcomeMessageOn = service.WelcomeBool;
