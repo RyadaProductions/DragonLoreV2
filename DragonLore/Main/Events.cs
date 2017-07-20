@@ -28,14 +28,14 @@ namespace DragonLore.Main
     {
       _map = map;
 
+      _commandChecker = new CommandChecker(_map);
+
       _settings = map.GetService<Settings>();
       _saveLoadService = map.GetService<SaveLoadService>();
       _botMessage = map.GetService<IBotMessageManager>();
       _roles = map.GetService<IRoles>();
       _channels = map.GetService<IChannels>();
       _logManager = map.GetService<LogManager>();
-
-      _commandChecker = new CommandChecker(map);
     }
 
     public async Task Connected()

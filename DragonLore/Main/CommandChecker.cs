@@ -61,8 +61,8 @@ namespace DragonLore.Main
 
         if (!result.IsSuccess)
         {
-          await _botMessage.SendAndRemoveEmbed(result.ErrorReason, context);
           await _logManager.Logger(new LogMessage(LogSeverity.Warning, "Command", $"user: {message.Author} command: {message.Content} error: {result.ErrorReason}"));
+          await _botMessage.SendAndRemoveEmbed(result.ErrorReason, context);
         }
       }
     }

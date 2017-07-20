@@ -30,29 +30,35 @@ namespace DragonLore.Modules
     [RequireAdminPermission]
     public async Task AddServerToList([Remainder, Summary("The ip of the server")] string ip)
     {
-      string messageContent;
-
-      if (_settings.Servers.Contains(ip))
-        messageContent = $"serverlist already contains {ip}";
-      else
+      try
       {
-        var stopwatch = new Stopwatch();
-        stopwatch.Start();
-        var serverInfo = await new CsgoServerService(_settings).GetServerInfo(ip);
-        stopwatch.Stop();
-        var ping = stopwatch.ElapsedMilliseconds;
+        string messageContent;
 
-        if (serverInfo != null)
-        {
-          _settings.Servers = _settings.Servers.Concat(new[] { ip });
-
-          messageContent = $"**{serverInfo.Name}**\n has successfully been added to the server list. \n `ip: {ip}` || `ping: {ping}ms`";
-        }
+        if (_settings.Servers.Contains(ip))
+          messageContent = $"serverlist already contains {ip}";
         else
-          messageContent = "Could not add server, no valid ip given";
-      }
+        {
+          var stopwatch = new Stopwatch();
+          stopwatch.Start();
+          var serverInfo = await new CsgoServerService(_settings).GetServerInfo(ip);
+          stopwatch.Stop();
+          var ping = stopwatch.ElapsedMilliseconds;
 
-      await _botMessage.SendAndRemoveEmbed(messageContent, Context);
+          if (serverInfo != null)
+          {
+            _settings.Servers = _settings.Servers.Concat(new[] { ip });
+
+            messageContent = $"**{serverInfo.Name}**\n has successfully been added to the server list. \n `ip: {ip}` || `ping: {ping}ms`";
+          }
+          else
+            messageContent = "Could not add server, no valid ip given";
+        }
+
+        await _botMessage.SendAndRemoveEmbed(messageContent, Context);
+      } catch (Exception e)
+      {
+        Console.WriteLine(e);
+      }
     }
 
     [Command("RemoveServer", RunMode = RunMode.Async)]

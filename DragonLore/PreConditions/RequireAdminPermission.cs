@@ -16,7 +16,7 @@ namespace DragonLore.PreConditions
 
     public override Task<PreconditionResult> CheckPermissions(ICommandContext context, CommandInfo command, IServiceProvider services)
     {
-      //@@@ for some reason map does not contain any services so everything i get from it creates a Null exception.
+      //@@@ for some reason services does not contain any services so everything i get from it creates a Null exception.
       // This is probably caused by the Discord.NET library, and should need further investigation.
       _channels = services.GetRequiredService<IChannels>();
       _roles = services.GetRequiredService<IRoles>();
