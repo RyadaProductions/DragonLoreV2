@@ -10,7 +10,6 @@ namespace DragonLore
   public class DragonLore
   {
     private readonly DiscordSocketClient _client;
-    private readonly CommandService _commands;
 
     public DragonLore()
     {
