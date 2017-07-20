@@ -34,7 +34,7 @@ namespace DragonLore.Modules
       switch (argument)
       {
         case "load":
-          if (await _saveLoadService.LoadVars())
+          if (_saveLoadService.LoadVars())
             messageContent = "Settings Loaded";
           else messageContent = "An error occured while loading settings";
           break;

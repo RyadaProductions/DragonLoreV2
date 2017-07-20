@@ -11,7 +11,7 @@ namespace DragonLore.Managers
   {
     Task DirectMessageUserAsync(string message, SocketUser user, Embed embed);
 
-    Task DirectMessageUserEmbedAsync(string messageContent, IGuildUser user);
+    Task DirectMessageUserEmbedAsync(string messageContent, SocketUser user);
 
     Task<RestUserMessage> DirectMessageChannelAsync(string text, ISocketMessageChannel channel);
 

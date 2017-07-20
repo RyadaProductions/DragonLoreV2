@@ -15,11 +15,11 @@ namespace DragonLore.Managers
       await dMChannel.SendMessageAsync(message, embed: embed);
     }
 
-    public async Task DirectMessageUserEmbedAsync(string messageContent, IGuildUser user)
+    public async Task DirectMessageUserEmbedAsync(string messageContent, SocketUser user)
     {
-      var dMChannel = await user.GetOrCreateDMChannelAsync();
+      var test = user as SocketUser;
       var embed = GenerateEmbedAsync(messageContent);
-      await dMChannel.SendMessageAsync("", embed: embed);
+      await test.SendMessageAsync("", embed: embed);
     }
 
     public async Task<RestUserMessage> DirectMessageChannelAsync(string text, ISocketMessageChannel channel)

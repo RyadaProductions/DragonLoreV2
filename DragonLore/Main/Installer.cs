@@ -70,7 +70,7 @@ namespace DragonLore.Main
       _client.MessageReceived += events.CmdHandler;
       _client.UserJoined += events.WelcomeHandler;
       _client.UserVoiceStateUpdated += events.UserVoiceStateUpdated;
-      _client.Connected += events.Connected;
+      _client.GuildAvailable += events.ConnectedToGuild;
     }
   }
 }

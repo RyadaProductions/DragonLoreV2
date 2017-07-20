@@ -30,35 +30,29 @@ namespace DragonLore.Modules
     [RequireAdminPermission]
     public async Task AddServerToList([Remainder, Summary("The ip of the server")] string ip)
     {
-      try
-      {
-        string messageContent;
+      string messageContent;
 
-        if (_settings.Servers.Contains(ip))
-          messageContent = $"serverlist already contains {ip}";
-        else
+      if (_settings.Servers.Contains(ip))
+        messageContent = $"serverlist already contains {ip}";
+      else
+      {
+        var stopwatch = new Stopwatch();
+        stopwatch.Start();
+        var serverInfo = await new CsgoServerService(_settings).GetServerInfo(ip);
+        stopwatch.Stop();
+        var ping = stopwatch.ElapsedMilliseconds;
+
+        if (serverInfo != null)
         {
-          var stopwatch = new Stopwatch();
-          stopwatch.Start();
-          var serverInfo = await new CsgoServerService(_settings).GetServerInfo(ip);
-          stopwatch.Stop();
-          var ping = stopwatch.ElapsedMilliseconds;
+          _settings.Servers = _settings.Servers.Concat(new[] { ip });
 
-          if (serverInfo != null)
-          {
-            _settings.Servers = _settings.Servers.Concat(new[] { ip });
-
-            messageContent = $"**{serverInfo.Name}**\n has successfully been added to the server list. \n `ip: {ip}` || `ping: {ping}ms`";
-          }
-          else
-            messageContent = "Could not add server, no valid ip given";
+          messageContent = $"**{serverInfo.Name}**\n has successfully been added to the server list. \n `ip: {ip}` || `ping: {ping}ms`";
         }
-
-        await _botMessage.SendAndRemoveEmbed(messageContent, Context);
-      } catch (Exception e)
-      {
-        Console.WriteLine(e);
+        else
+          messageContent = "Could not add server, no valid ip given";
       }
+
+      await _botMessage.SendAndRemoveEmbed(messageContent, Context);
     }
 
     [Command("RemoveServer", RunMode = RunMode.Async)]
@@ -85,7 +79,7 @@ namespace DragonLore.Modules
     [Alias("Serverlist")]
     public async Task GenerateServerList()
     {
-      var user = Context.Message.Author as SocketGuildUser;
+      var user = Context.Message.Author;
 
       var messageContent = "";
 
@@ -95,7 +89,8 @@ namespace DragonLore.Modules
       {
         var onlineServerList = new ConcurrentBag<string>();
         var offlineServerList = new ConcurrentBag<string>();
-        Parallel.ForEach(_settings.Servers, async (serverIP) =>
+
+        var Tasks = _settings.Servers.Select(async (serverIP) =>
         {
           var stopwatch = new Stopwatch();
           stopwatch.Start();
@@ -114,12 +109,15 @@ namespace DragonLore.Modules
             var serverString = $"`ip: {serverIP}` || `Status: Offline`\n";
             offlineServerList.Add(serverString);
           }
+          return true;
         });
 
+        await Task.WhenAll(Tasks);
+
         var serverList = new List<string>();
-        serverList.Add("**Online Servers:** \n \n");
+        serverList.Add("**Online Servers:**\n\n");
         serverList.AddRange(onlineServerList);
-        serverList.Add("\n \n **Offline Servers:**\n \n");
+        serverList.Add("\n**Offline Servers:**\n\n");
         serverList.AddRange(offlineServerList);
 
         var count = 0;

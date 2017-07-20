@@ -62,7 +62,13 @@ namespace DragonLore.Main
         if (!result.IsSuccess)
         {
           await _logManager.Logger(new LogMessage(LogSeverity.Warning, "Command", $"user: {message.Author} command: {message.Content} error: {result.ErrorReason}"));
-          await _botMessage.SendAndRemoveEmbed(result.ErrorReason, context);
+
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+          Task.Run(async () =>
+          {
+            await _botMessage.SendAndRemoveEmbed(result.ErrorReason, context);
+          });
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         }
       }
     }

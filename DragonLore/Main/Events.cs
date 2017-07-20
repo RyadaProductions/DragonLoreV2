@@ -38,15 +38,16 @@ namespace DragonLore.Main
       _logManager = map.GetService<LogManager>();
     }
 
-    public async Task Connected()
+    public async Task ConnectedToGuild(SocketGuild arg)
     {
-      IRssReader mainRSS = new RssReader(_map.GetService<RssService>(), _logManager);
-
-      if (await _saveLoadService.LoadVars())
+      if (_saveLoadService.LoadVars())
         await _logManager.Logger(new LogMessage(LogSeverity.Info, "Settings", "Settings loaded succesfully."));
       else
         await _logManager.Logger(new LogMessage(LogSeverity.Warning, "Settings", "Error loading Settings, this is normal if it is a fresh installation."));
-      _settings.Client.Connected -= Connected;
+
+      IRssReader mainRSS = new RssReader(_map.GetService<RssService>(), _logManager);
+
+      //_settings.Client.Connected -= Connected;
     }
 
     public async Task WelcomeHandler(SocketGuildUser arg)

@@ -23,7 +23,7 @@ namespace DragonLore.Services
       _settings = settings;
     }
 
-    public async Task<bool> LoadVars()
+    public bool LoadVars()
     {
       try
       {
