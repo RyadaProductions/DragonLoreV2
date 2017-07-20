@@ -1,14 +1,12 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
-using System.Collections.Generic;
-using System.Text;
-using Discord.Commands;
-using DragonLore.Models;
-using DragonLore.Managers;
-using DragonLore.MagicNumbers.Roles;
-using System.Threading.Tasks;
+﻿using Discord.Commands;
 using Discord.WebSocket;
+using DragonLore.MagicNumbers.Roles;
+using DragonLore.Managers;
+using DragonLore.Models;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DragonLore.Modules
 {

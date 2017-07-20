@@ -1,11 +1,9 @@
-﻿using DragonLore.Models;
+﻿using CoreRCON;
+using CoreRCON.PacketFormats;
+using DragonLore.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using CoreRCON;
 using System.Net;
 using System.Threading.Tasks;
-using CoreRCON.PacketFormats;
 
 namespace DragonLore.Services
 {

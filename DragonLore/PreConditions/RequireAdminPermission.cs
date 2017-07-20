@@ -2,12 +2,10 @@
 using Discord.WebSocket;
 using DragonLore.MagicNumbers.Channels;
 using DragonLore.MagicNumbers.Roles;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DragonLore.PreConditions
 {

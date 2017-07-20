@@ -1,19 +1,17 @@
 ﻿using Discord.WebSocket;
-using DragonLore.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 using DragonLore.MagicNumbers.Channels;
 using DragonLore.MagicNumbers.Roles;
 using DragonLore.Managers;
-using DragonLore.Services;
+using DragonLore.Models;
 using DragonLore.Rss;
+using DragonLore.Services;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Threading.Tasks;
 
 namespace DragonLore.Main
 {
-  class Events
+  internal class Events
   {
     private readonly SaveLoadService _saveLoadService;
     private readonly Settings _settings;

@@ -3,13 +3,11 @@ using Discord.Commands;
 using Discord.WebSocket;
 using DragonLore.Managers;
 using DragonLore.Models;
-using DragonLore.Services;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 using DragonLore.PreConditions;
+using DragonLore.Services;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Threading.Tasks;
 
 namespace DragonLore.Modules
 {

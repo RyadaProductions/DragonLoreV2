@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Extensions.DependencyInjection;
-using System.Text;
-using Discord.Commands;
-using DragonLore.Models;
-using DragonLore.Managers;
-using DragonLore.PreConditions;
-using System.Threading.Tasks;
-using System.Linq;
-using DragonLore.Services;
+﻿using Discord.Commands;
 using Discord.WebSocket;
+using DragonLore.Managers;
+using DragonLore.Models;
+using DragonLore.PreConditions;
+using DragonLore.Services;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Concurrent;
-using CoreRCON.PacketFormats;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace DragonLore.Modules
 {

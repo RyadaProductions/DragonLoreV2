@@ -1,17 +1,15 @@
-﻿using Discord.WebSocket;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Discord;
+﻿using Discord;
 using Discord.Commands;
-using DragonLore.Models;
-using DragonLore.Managers;
-using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
-using DragonLore.MagicNumbers.Roles;
+using Discord.WebSocket;
 using DragonLore.MagicNumbers.Channels;
+using DragonLore.MagicNumbers.Roles;
+using DragonLore.Managers;
+using DragonLore.Models;
 using DragonLore.Services;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Reflection;
+using System.Threading.Tasks;
 
 namespace DragonLore.Main
 {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DragonLore.Models
+﻿namespace DragonLore.Models
 {
   public class Inventory
   {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DragonLore.MagicNumbers.Channels
+﻿namespace DragonLore.MagicNumbers.Channels
 {
   internal class LiveChannels : IChannels
   {

@@ -1,9 +1,7 @@
 ﻿using Discord.WebSocket;
 using DragonLore.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace DragonLore.MagicNumbers.Roles
 {

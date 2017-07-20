@@ -1,16 +1,14 @@
 ﻿using Discord.Commands;
 using Discord.WebSocket;
+using DragonLore.MagicNumbers.Roles;
+using DragonLore.Managers;
 using DragonLore.Models;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using DragonLore.Managers;
-using DragonLore.MagicNumbers.Roles;
-using System.Net.Http;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace DragonLore.Modules
 {
@@ -36,7 +34,7 @@ namespace DragonLore.Modules
       {
         var result = await webClient.GetAsync($"http://csgobackpack.net/api/GetInventoryValue/?id={steamID}");
         string jsonContent = await result.Content.ReadAsStringAsync();
-        
+
         var inventoryData = JsonConvert.DeserializeObject<Inventory>(jsonContent);
         if (inventoryData.Success)
           messageContent = $"**Player:** {steamID}\n**Inventory value:** {inventoryData.Value} {inventoryData.Currency}\n**Items:** {inventoryData.Items}";

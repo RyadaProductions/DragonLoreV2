@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Discord.WebSocket;
+﻿using Discord;
 using Discord.Commands;
-using Discord;
-using System.Threading.Tasks;
+using Discord.WebSocket;
 using DragonLore.Main;
+using System;
+using System.Threading.Tasks;
 
 namespace DragonLore
 {

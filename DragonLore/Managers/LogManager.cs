@@ -1,13 +1,11 @@
 ﻿using Discord;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DragonLore.Managers
 {
-  class LogManager
+  internal class LogManager
   {
     public async Task Logger(LogMessage message)
     {

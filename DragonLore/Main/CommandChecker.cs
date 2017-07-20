@@ -4,11 +4,9 @@ using Discord.WebSocket;
 using DragonLore.MagicNumbers.Channels;
 using DragonLore.Managers;
 using DragonLore.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Threading.Tasks;
 
 namespace DragonLore.Main
 {

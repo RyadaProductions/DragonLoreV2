@@ -3,9 +3,6 @@ using Discord.WebSocket;
 using DragonLore.MagicNumbers.Channels;
 using DragonLore.Managers;
 using DragonLore.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DragonLore.Services
@@ -37,6 +34,5 @@ namespace DragonLore.Services
         _saveLoadService.SaveVars();
       }
     }
-
   }
 }
