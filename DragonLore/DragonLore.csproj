@@ -6,9 +6,34 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Logs\**" />
+    <EmbeddedResource Remove="Logs\**" />
+    <None Remove="Logs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="settings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CodeHollow.FeedReader" Version="1.1.0" />
     <PackageReference Include="CoreRCON" Version="2.0.0" />
     <PackageReference Include="Discord.Net" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\Gifs\Fail\DuckToDodge.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Gifs\Fail\FeFailNade.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Gifs\Fail\KillTheDefuser.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Gifs\Fail\NadeTheAFK.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

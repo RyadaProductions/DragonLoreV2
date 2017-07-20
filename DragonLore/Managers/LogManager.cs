@@ -46,7 +46,9 @@ namespace DragonLore.Managers
 
       var logFile = Path.Combine(folder, $"{DateTime.Now.Day}{DateTime.Now.Month}{DateTime.Now.Year}.log");
 
-      using (StreamWriter writer = File.CreateText(logFile))
+      var stream = File.Open(logFile, FileMode.Append);
+
+      using (StreamWriter writer = new StreamWriter(stream))
       {
         await writer.WriteLineAsync(logMessage);
       }

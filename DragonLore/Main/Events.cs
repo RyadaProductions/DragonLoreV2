@@ -1,4 +1,5 @@
-﻿using Discord.WebSocket;
+﻿using Discord;
+using Discord.WebSocket;
 using DragonLore.MagicNumbers.Channels;
 using DragonLore.MagicNumbers.Roles;
 using DragonLore.Managers;
@@ -21,6 +22,7 @@ namespace DragonLore.Main
     private readonly IRoles _roles;
     private readonly IChannels _channels;
     private readonly CommandChecker _commandChecker;
+    private readonly LogManager _logManager;
 
     public Events(IServiceProvider map)
     {
@@ -31,26 +33,20 @@ namespace DragonLore.Main
       _botMessage = map.GetService<IBotMessageManager>();
       _roles = map.GetService<IRoles>();
       _channels = map.GetService<IChannels>();
+      _logManager = map.GetService<LogManager>();
 
       _commandChecker = new CommandChecker(map);
     }
 
     public async Task Connected()
     {
-      try
-      {
-        IRssReader mainRSS = new RssReader(_map.GetService<RssService>());
+      IRssReader mainRSS = new RssReader(_map.GetService<RssService>(), _logManager);
 
-        if (await _saveLoadService.LoadVars())
-          Console.WriteLine("Settings loaded succesfully.");
-        else
-          Console.WriteLine("Error loading Settings, this is normal if it is a fresh installation.");
-        _settings.Client.Connected -= Connected;
-      }
-      catch (Exception e)
-      {
-        Console.WriteLine(e);
-      }
+      if (await _saveLoadService.LoadVars())
+        await _logManager.Logger(new LogMessage(LogSeverity.Info, "Settings", "Settings loaded succesfully."));
+      else
+        await _logManager.Logger(new LogMessage(LogSeverity.Warning, "Settings", "Error loading Settings, this is normal if it is a fresh installation."));
+      _settings.Client.Connected -= Connected;
     }
 
     public async Task WelcomeHandler(SocketGuildUser arg)
@@ -76,7 +72,7 @@ namespace DragonLore.Main
       var msg = arg as SocketUserMessage;
       if (msg == null || msg.Author.IsBot) return;
 
-      await _commandChecker.Spam(msg);
+      if (await _commandChecker.Spam(msg)) return;
       await _commandChecker.Command(msg);
     }
   }

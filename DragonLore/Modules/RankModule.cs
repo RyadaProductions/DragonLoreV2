@@ -29,9 +29,15 @@ namespace DragonLore.Modules
     public async Task ChangeRank([Remainder, Summary("The rank to set")] string newRank = null)
     {
       // Check if parameter has been defined if not stop instantly to avoid doing useless things.
+      if (_settings.Ranks.Count() == 0)
+      {
+        await _botMessage.SendAndRemoveEmbed("No ranks have been registered, please contact ryada.", Context);
+        return;
+      }
+
       if (newRank == null)
       {
-        await _botMessage.SendAndRemoveEmbed("no rank has been entered. You can set your rank like this: `!rank GN3`", Context);
+        await _botMessage.SendAndRemoveEmbed("No rank has been entered. You can set your rank like this: `!rank GN3`", Context);
         return;
       }
 

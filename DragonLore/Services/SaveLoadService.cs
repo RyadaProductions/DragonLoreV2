@@ -1,4 +1,6 @@
 ﻿using CoreRCON.PacketFormats;
+using Discord;
+using DragonLore.Managers;
 using DragonLore.Models;
 using Newtonsoft.Json;
 using System;
@@ -27,9 +29,7 @@ namespace DragonLore.Services
       {
         if (!File.Exists(_saveFile))
         {
-          Console.WriteLine("No save file found, creating a new one.");
           SaveVars();
-          return false;
         }
 
         string input = File.ReadAllText(_saveFile);
@@ -57,9 +57,8 @@ namespace DragonLore.Services
         _settings.LastRSS["valve"] = service.LastValveRss;
         return true;
       }
-      catch (Exception e)
+      catch
       {
-        Console.WriteLine(e);
         return false;
       }
     }
@@ -78,13 +77,11 @@ namespace DragonLore.Services
 
         var savableOutput = JsonConvert.SerializeObject(temp);
         File.WriteAllText(_saveFile, savableOutput);
-
-        Console.WriteLine("Saved successfully");
+        
         return true;
       }
-      catch (Exception ex)
+      catch
       {
-        Console.WriteLine(ex);
         return false;
       }
     }

@@ -33,7 +33,7 @@ namespace DragonLore.Main
       _channels = map.GetService<IChannels>();
     }
 
-    public async Task Spam(SocketUserMessage message)
+    public async Task<bool> Spam(SocketUserMessage message)
     {
       if (message.Content.Contains("discord.gg/"))
       {
@@ -43,8 +43,10 @@ namespace DragonLore.Main
         await _logManager.Logger(new LogMessage(LogSeverity.Warning, "Spam", $"user: {message.Author} advertised: {message.Content}"));
 
         await message.DeleteAsync();
-        return;
+
+        return true;
       }
+      return false;
     }
 
     public async Task Command(SocketUserMessage message)

@@ -104,15 +104,16 @@ namespace DragonLore.Managers
       embed.WithUrl(newsItem.Link);
       embed.WithFooter(new EmbedFooterBuilder()
         .WithText(newsItem.PublishingDateString));
-      //check the source so we know what to do with the summary of the News
+
+      //check the source so we know what to do with the Content of the News
       switch (source)
       {
         case "GosuGamers News":
           if (newsItem.Content != null)
           {
-            int startPos = newsItem.Content.IndexOf("<p>") + "<p>".Length;
-            int length = newsItem.Content.IndexOf("</p><p>") - startPos;
-            embed.WithDescription(newsItem.Content.Substring(startPos, length));
+            int startPos = newsItem.Description.IndexOf("<p>") + "<p>".Length;
+            int length = newsItem.Description.IndexOf("</p><p>") - startPos;
+            embed.WithDescription(newsItem.Description.Substring(startPos, length));
           }
           break;
 
@@ -121,12 +122,14 @@ namespace DragonLore.Managers
           break;
 
         case "Counter-strike.net":
-          embed.WithDescription(newsItem.Content.Replace("&#8211;", "\n-"));
-          if (newsItem.Content.Length > 1700)
+          var description = newsItem.Description.Replace("[&#8230;]", "");
+          description = description.Replace("&#8211;", "\n-");
+          if (description.Length > 1700)
           {
-            var limited = newsItem.Content.Substring(0, 1700);
-            limited += "\n Press the title to see the full patchnotes";
+            description = newsItem.Description.Substring(0, 1700);
+            description += "\n Press the title to see the full patchnotes";
           }
+          embed.WithDescription(description);
           break;
       }
 

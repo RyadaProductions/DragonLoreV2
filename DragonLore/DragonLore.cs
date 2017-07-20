@@ -1,5 +1,4 @@
 ﻿using Discord;
-using Discord.Commands;
 using Discord.WebSocket;
 using DragonLore.Main;
 using System;

@@ -1,4 +1,6 @@
 ﻿using CodeHollow.FeedReader;
+using Discord;
+using DragonLore.Managers;
 using DragonLore.Services;
 using System;
 using System.Linq;
@@ -10,14 +12,16 @@ namespace DragonLore.Rss
   internal class RssReader : IRssReader
   {
     private readonly RssService _service;
+    private readonly LogManager _logManager;
 
     private readonly Timer _rssTimer;
 
     private string _rss = "gosu";
 
-    public RssReader(RssService service)
+    public RssReader(RssService service, LogManager logmanager)
     {
       _service = service;
+      _logManager = logmanager;
 
       _rssTimer = new Timer(async (e) => { await RSSTimerCallback(); }, null, 0, 5000);
     }
@@ -53,9 +57,9 @@ namespace DragonLore.Rss
 
         await _service.CheckNewRss(_rss, source, news);
       }
-      catch (Exception ex)
+      catch
       {
-        Console.WriteLine(source + ex);
+        await _logManager.Logger(new LogMessage(LogSeverity.Warning, "RssReader", $"could not parse the { source } feed"));
       }
     }
   }

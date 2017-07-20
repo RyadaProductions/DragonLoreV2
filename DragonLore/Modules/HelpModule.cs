@@ -27,51 +27,57 @@ namespace DragonLore.Modules
     [Summary("List all commands")]
     public async Task Help()
     {
-      var user = Context.Message.Author;
-      // Check if the user has any rank registered to him from the List<>ranks and remove them.
-      var builder = new EmbedBuilder()
+      try
       {
-        Color = new Color(9912378),
-        Description = "These are the commands you can use:"
-      };
-
-      foreach (var module in _commandService.Modules)
-      {
-        string description = null;
-        foreach (var cmd in module.Commands)
+        var user = Context.Message.Author;
+        // Check if the user has any rank registered to him from the List<>ranks and remove them.
+        var builder = new EmbedBuilder()
         {
-          var result = await cmd.CheckPreconditionsAsync(Context);
-          if (result.IsSuccess)
+          Color = new Color(9912378),
+          Description = "These are the commands you can use:"
+        };
+
+        foreach (var module in _commandService.Modules)
+        {
+          string description = null;
+          foreach (var cmd in module.Commands)
           {
-            if (cmd.Parameters.Count > 0)
+            var result = await cmd.CheckPreconditionsAsync(Context);
+            if (result.IsSuccess)
             {
-              description += $"!{cmd.Aliases.First()} `{string.Join("`, `", cmd.Parameters.Select(p => p.Name))}`\n";
-            }
-            else
-            {
-              description += $"!{cmd.Aliases.First()}\n";
+              if (cmd.Parameters.Count > 0)
+              {
+                description += $"!{cmd.Aliases.First()} `{string.Join("`, `", cmd.Parameters.Select(p => p.Name))}`\n";
+              }
+              else
+              {
+                description += $"!{cmd.Aliases.First()}\n";
+              }
             }
           }
-        }
-        if (!string.IsNullOrWhiteSpace(description))
-        {
-          builder.AddField(x =>
+          if (!string.IsNullOrWhiteSpace(description))
           {
-            x.Name = module.Name;
-            x.Value = description;
-            x.IsInline = false;
-          });
+            builder.AddField(x =>
+            {
+              x.Name = module.Name;
+              x.Value = description;
+              x.IsInline = false;
+            });
+          }
         }
-      }
-      builder.AddField(x =>
-      {
-        x.Name = "Where can I use those commands?";
-        x.Value = "Please use all commands inside the CSHub discord, since I won't reply or react to DM's";
-      });
-      await _botMessage.DirectMessageUserAsync("", user, embed: builder.Build());
+        builder.AddField(x =>
+        {
+          x.Name = "Where can I use those commands?";
+          x.Value = "Please use all commands inside the CSHub discord, since I won't reply or react to DM's";
+        });
+        await _botMessage.DirectMessageUserAsync("", user, embed: builder.Build());
 
-      var messageContext = "Send you a DM <:csgochicken:306772928626950146> ";
-      await _botMessage.SendAndRemoveEmbed(messageContext, Context);
+        var messageContext = "Send you a DM <:csgochicken:306772928626950146> ";
+        await _botMessage.SendAndRemoveEmbed(messageContext, Context);
+      } catch (Exception e)
+      {
+        Console.Write(e);
+      }
     }
 
     [Command("Info", RunMode = RunMode.Async)]
