@@ -5,8 +5,6 @@ using DragonLore.Managers;
 using DragonLore.Models;
 using DragonLore.PreConditions;
 using DragonLore.Services;
-using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Threading.Tasks;
 
 namespace DragonLore.Modules
@@ -34,15 +32,11 @@ namespace DragonLore.Modules
       switch (argument)
       {
         case "load":
-          if (await _saveLoadService.LoadVarsAsync())
-            messageContent = "Settings Loaded";
-          else messageContent = "An error occured while loading settings";
+          messageContent = await _saveLoadService.LoadVarsAsync() ? "Settings Loaded" : "An error occured while loading settings";
           break;
 
         case "save":
-          if (_saveLoadService.SaveVars())
-            messageContent = "Settings Saved";
-          else messageContent = "An error occured while loading settings";
+          messageContent = _saveLoadService.SaveVars() ? "Settings Saved" : "An error occured while loading settings";
           break;
 
         default:
@@ -71,17 +65,16 @@ namespace DragonLore.Modules
     [Command("Ban", RunMode = RunMode.Async)]
     [Summary("ban the user for x days, purge messages, and sends reason")]
     [RequireAdminPermission]
-    public async Task BanUser([Summary("@username")] IGuildUser username, [Summary("the amount of days to ban the user")] string prune, [Remainder, Summary("the reason you ban somebody")] string reason)
+    public async Task BanUser([Summary("@username")] IGuildUser username, [Remainder, Summary("the reason you ban somebody")] string reason)
     {
       var user = Context.Message.Author as SocketGuildUser;
-      var pruneInt = Int32.Parse(prune);
 
-      var embed = _botMessage.GenerateEmbedAsync($"You have been banned from: **{Context.Guild.Name}**\n**By:** {user.Username}\n**Time untill unban:** {prune}\n**Reason:**\n{reason}");
+      var embed = _botMessage.GenerateEmbedAsync($"You have been banned from: **{Context.Guild.Name}**\n**By:** {user.Username}\n**Reason:**\n{reason}");
       await _botMessage.DirectMessageUserAsync("", username as SocketUser, embed);
 
-      await Context.Guild.AddBanAsync(username, pruneInt, reason);
+      await Context.Guild.AddBanAsync(username, 1, reason);
 
-      await _botMessage.SendEmbedAndRemoveCommand($"has banned: {username.Username}\n**Time untill unban:** {prune}\n**Reason:** {reason}", Context, user);
+      await _botMessage.SendEmbedAndRemoveCommand($"has banned: {username.Username}\n**Reason:** {reason}", Context, user);
     }
 
     [Command("Welcomemessage", RunMode = RunMode.Async)]

@@ -1,9 +1,6 @@
 ﻿using CoreRCON.PacketFormats;
-using Discord;
-using DragonLore.Managers;
 using DragonLore.Models;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -39,7 +36,6 @@ namespace DragonLore.Services
 
         var serversToAdd = new List<string>();
 
-
         var Tasks = _settings.Servers.Select(async (ip) =>
         {
           ServerQueryInfo info = await new CsgoServerService(_settings).GetServerInfo(ip);
@@ -70,17 +66,19 @@ namespace DragonLore.Services
     {
       try
       {
-        Serializing temp = new Serializing();
-        temp.Servers = _settings.Servers;
-        temp.WelcomeBool = _settings.IsWelcomeMessageOn;
-        temp.WelcomeMessage = _settings.WelcomeMessage;
-        temp.LastGosuRss = _settings.LastRSS["gosu"];
-        temp.LastHltvRss = _settings.LastRSS["hltv"];
-        temp.LastValveRss = _settings.LastRSS["valve"];
+        Serializing temp = new Serializing()
+        {
+          Servers = _settings.Servers,
+          WelcomeBool = _settings.IsWelcomeMessageOn,
+          WelcomeMessage = _settings.WelcomeMessage,
+          LastGosuRss = _settings.LastRSS["gosu"],
+          LastHltvRss = _settings.LastRSS["hltv"],
+          LastValveRss = _settings.LastRSS["valve"]
+        };
 
         var savableOutput = JsonConvert.SerializeObject(temp);
         File.WriteAllText(_saveFile, savableOutput);
-        
+
         return true;
       }
       catch

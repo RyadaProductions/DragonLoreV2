@@ -3,9 +3,8 @@ using Discord.WebSocket;
 using DragonLore.MagicNumbers.Roles;
 using DragonLore.Managers;
 using DragonLore.Models;
-using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace DragonLore.Modules
@@ -28,7 +27,7 @@ namespace DragonLore.Modules
     public async Task ChangeRank([Remainder, Summary("The rank to set")] string newRank = null)
     {
       // Check if parameter has been defined if not stop instantly to avoid doing useless things.
-      if (_settings.Ranks.Count() == 0)
+      if (_settings.Ranks.Any())
       {
         await _botMessage.SendAndRemoveEmbed("No ranks have been registered, please contact ryada.", Context);
         return;
@@ -102,15 +101,15 @@ namespace DragonLore.Modules
     {
       string messageContent;
 
-      if (_settings.Ranks.Count() == 0)
+      if (_settings.Ranks.Any())
         messageContent = "No ranks have been registered";
       else
       {
-        var rankList = "";
+        var rankList = new StringBuilder();
 
         foreach (var role in _settings.Ranks)
         {
-          rankList += $"- **{role.Name}**: {role.Members.Count()} \n";
+          rankList.Append($"- **{role.Name}**: {role.Members.Count()} \n");
         }
 
         messageContent = $"**Ranks:** \n \n {rankList} \n You can set your rank with **!rank [rankname]**";

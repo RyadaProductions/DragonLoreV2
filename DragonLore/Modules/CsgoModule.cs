@@ -3,9 +3,7 @@ using Discord.WebSocket;
 using DragonLore.MagicNumbers.Roles;
 using DragonLore.Managers;
 using DragonLore.Models;
-using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -36,11 +34,9 @@ namespace DragonLore.Modules
         string jsonContent = await result.Content.ReadAsStringAsync();
 
         var inventoryData = JsonConvert.DeserializeObject<Inventory>(jsonContent);
-        if (inventoryData.Success)
-          messageContent = $"**Player:** {steamID}\n**Inventory value:** {inventoryData.Value} {inventoryData.Currency}\n**Items:** {inventoryData.Items}";
-        else
-          messageContent = "**Error** \nAre you sure you entered a correct steamID?\nYou can get your steamID from your profile url.";
-
+        messageContent = inventoryData.Success ?
+          $"**Player:** {steamID}\n**Inventory value:** {inventoryData.Value} {inventoryData.Currency}\n**Items:** {inventoryData.Items}" :
+          "**Error** \nAre you sure you entered a correct steamID?\nYou can get your steamID from your profile url.";
         await _botMessage.SendAndRemoveEmbed(messageContent, Context, user);
       }
     }

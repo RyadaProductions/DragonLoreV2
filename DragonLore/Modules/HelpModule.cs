@@ -2,10 +2,10 @@
 using Discord.Commands;
 using DragonLore.Managers;
 using DragonLore.Models;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace DragonLore.Modules
@@ -39,28 +39,25 @@ namespace DragonLore.Modules
 
       foreach (var module in _commandService.Modules)
       {
-        string description = null;
+        StringBuilder description = new StringBuilder();
+
         foreach (var cmd in module.Commands)
         {
           var result = await cmd.CheckPreconditionsAsync(Context, _map);
           if (result.IsSuccess)
           {
             if (cmd.Parameters.Count > 0)
-            {
-              description += $"!{cmd.Aliases.First()} `{string.Join("`, `", cmd.Parameters.Select(p => p.Name))}`\n";
-            }
+              description.Append($"!{cmd.Aliases.First()} `{string.Join("`, `", cmd.Parameters.Select(p => p.Name))}`\n");
             else
-            {
-              description += $"!{cmd.Aliases.First()}\n";
-            }
+              description.Append($"!{cmd.Aliases.First()}\n");
           }
         }
-        if (!string.IsNullOrWhiteSpace(description))
+        if (description.Length >= 0)
         {
           builder.AddField(x =>
           {
             x.Name = module.Name;
-            x.Value = description;
+            x.Value = description.ToString();
             x.IsInline = false;
           });
         }
@@ -80,15 +77,15 @@ namespace DragonLore.Modules
     public async Task Info()
     {
       var Uptime = DateTime.Now - Process.GetCurrentProcess().StartTime;
-      string messageContent = "";
-      messageContent += $"**Name:** Dragon Lore *version 2.0*\n";
-      messageContent += $"**Uptime:** {Uptime.Days} Days, {Uptime.Hours} Hours, {Uptime.Minutes} Minutes, {Uptime.Seconds} Seconds.\n";
-      messageContent += $"**Discord Servers:** {_settings.Client.Guilds.Count}\n";
-      messageContent += $"**Latency:** {_settings.Client.Latency}ms\n";
-      messageContent += $"**Memory Usage:** {(Process.GetCurrentProcess().PrivateMemorySize64 / 1024) / 1024}MB\n";
-      messageContent += $"**Discord.NET version:** 1.0.1\n";
-      messageContent += $"**Developer:** Ryada";
-      await _botMessage.SendAndRemoveEmbed(messageContent, Context);
+      StringBuilder messageBuilder = new StringBuilder();
+      messageBuilder.Append("**Name:** Dragon Lore *version 2.0*\n");
+      messageBuilder.Append($"**Uptime:** {Uptime.Days} Days, {Uptime.Hours} Hours, {Uptime.Minutes} Minutes, {Uptime.Seconds} Seconds.\n");
+      messageBuilder.Append($"**Discord Servers:** {_settings.Client.Guilds.Count}\n");
+      messageBuilder.Append($"**Latency:** {_settings.Client.Latency}ms\n");
+      messageBuilder.Append($"**Memory Usage:** {(Process.GetCurrentProcess().PrivateMemorySize64 / 1024) / 1024}MB\n");
+      messageBuilder.Append($"**Discord.NET version:** 1.0.1\n");
+      messageBuilder.Append($"**Developer:** Ryada");
+      await _botMessage.SendAndRemoveEmbed(messageBuilder.ToString(), Context);
     }
   }
 }

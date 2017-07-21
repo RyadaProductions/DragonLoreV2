@@ -17,9 +17,8 @@ namespace DragonLore.Managers
 
     public async Task DirectMessageUserEmbedAsync(string messageContent, SocketUser user)
     {
-      var socketUser = user as SocketUser;
       var embed = GenerateEmbedAsync(messageContent);
-      await socketUser.SendMessageAsync("", embed: embed);
+      await user.SendMessageAsync("", embed: embed);
     }
 
     public async Task<RestUserMessage> DirectMessageChannelAsync(string text, ISocketMessageChannel channel)
@@ -27,7 +26,7 @@ namespace DragonLore.Managers
       return await channel.SendMessageAsync(text);
     }
 
-    public async Task<RestUserMessage> DirectMessageChannelAsync(string text, ISocketMessageChannel channel, Embed embed = null)
+    public async Task<RestUserMessage> DirectMessageChannelAsync(string text, ISocketMessageChannel channel, Embed embed)
     {
       return await channel.SendMessageAsync(text, embed: embed);
     }
@@ -39,7 +38,7 @@ namespace DragonLore.Managers
       await message.DeleteAsync();
     }
 
-    public async Task RemoveCommandAndBotMessageAsync(SocketMessage message, ISocketMessageChannel channel, RestUserMessage botmessage = null)
+    public async Task RemoveCommandAndBotMessageAsync(SocketMessage message, ISocketMessageChannel channel, RestUserMessage botmessage)
     {
       // Wait 5 seconds before deleting
       await Task.Delay(5000);

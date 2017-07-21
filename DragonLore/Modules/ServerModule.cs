@@ -1,15 +1,13 @@
 ﻿using Discord.Commands;
-using Discord.WebSocket;
 using DragonLore.Managers;
 using DragonLore.Models;
 using DragonLore.PreConditions;
 using DragonLore.Services;
-using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace DragonLore.Modules
@@ -81,10 +79,10 @@ namespace DragonLore.Modules
     {
       var user = Context.Message.Author;
 
-      var messageContent = "";
+      var messageContent = new StringBuilder();
 
-      if (_settings.Servers.Count() == 0)
-        messageContent = "There are no servers registered";
+      if (_settings.Servers.Any())
+        messageContent.Append("There are no servers registered");
       else
       {
         var onlineServerList = new ConcurrentBag<string>();
@@ -100,14 +98,13 @@ namespace DragonLore.Modules
 
           if (serverInfo != null)
           {
-            var serverString = $"**{serverInfo.Name}**\n `ip: {serverIP}` || `Ping: {ping}ms` || `Players: {serverInfo.Players}/{serverInfo.MaxPlayers}` || `Map: {serverInfo.Map}`\n";
-            serverString += $"[Click here to join the server.](steam://connect/{serverIP})\n";
-            onlineServerList.Add(serverString);
+            var serverString = new StringBuilder($"**{serverInfo.Name}**\n `ip: {serverIP}` || `Ping: {ping}ms` || `Players: {serverInfo.Players}/{serverInfo.MaxPlayers}` || `Map: {serverInfo.Map}`\n");
+            serverString.Append($"[Click here to join the server.](steam://connect/{serverIP})\n");
+            onlineServerList.Add(serverString.ToString());
           }
           else
           {
-            var serverString = $"`ip: {serverIP}` || `Status: Offline`\n";
-            offlineServerList.Add(serverString);
+            offlineServerList.Add($"`ip: {serverIP}` || `Status: Offline`\n");
           }
           return true;
         });
@@ -124,17 +121,17 @@ namespace DragonLore.Modules
         foreach (string server in serverList)
         {
           if (count < 5)
-            messageContent += server;
+            messageContent.Append(server);
           else
           {
-            messageContent += server;
-            await _botMessage.DirectMessageUserEmbedAsync(messageContent, user);
+            messageContent.Append(server);
+            await _botMessage.DirectMessageUserEmbedAsync(messageContent.ToString(), user);
             count = 0;
-            messageContent = "";
+            messageContent.Clear();
           }
         }
       }
-      await _botMessage.DirectMessageUserEmbedAsync(messageContent, user);
+      await _botMessage.DirectMessageUserEmbedAsync(messageContent.ToString(), user);
     }
   }
 }
