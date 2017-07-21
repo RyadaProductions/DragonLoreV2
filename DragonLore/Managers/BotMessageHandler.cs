@@ -17,9 +17,9 @@ namespace DragonLore.Managers
 
     public async Task DirectMessageUserEmbedAsync(string messageContent, SocketUser user)
     {
-      var test = user as SocketUser;
+      var socketUser = user as SocketUser;
       var embed = GenerateEmbedAsync(messageContent);
-      await test.SendMessageAsync("", embed: embed);
+      await socketUser.SendMessageAsync("", embed: embed);
     }
 
     public async Task<RestUserMessage> DirectMessageChannelAsync(string text, ISocketMessageChannel channel)

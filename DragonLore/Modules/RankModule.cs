@@ -16,12 +16,11 @@ namespace DragonLore.Modules
     private readonly IBotMessageManager _botMessage;
     private readonly IRoles _roles;
 
-    public RankModule(IServiceProvider map)
+    public RankModule(Settings settings, IBotMessageManager botMessage, IRoles roles)
     {
-      _settings = map.GetService<Settings>();
-      _botMessage = map.GetService<IBotMessageManager>();
-
-      _roles = map.GetService<IRoles>();
+      _settings = settings;
+      _botMessage = botMessage;
+      _roles = roles;
     }
 
     [Command("Rank", RunMode = RunMode.Async)]

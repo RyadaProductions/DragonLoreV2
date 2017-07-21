@@ -17,10 +17,10 @@ namespace DragonLore.Modules
     private readonly IBotMessageManager _botMessage;
     private readonly IRoles _roles;
 
-    public CSGOModule(IServiceProvider map)
+    public CSGOModule(IBotMessageManager botMessage, IRoles roles)
     {
-      _botMessage = map.GetService<IBotMessageManager>();
-      _roles = map.GetService<IRoles>();
+      _botMessage = botMessage;
+      _roles = roles;
     }
 
     [Command("Inventory", RunMode = RunMode.Async)]

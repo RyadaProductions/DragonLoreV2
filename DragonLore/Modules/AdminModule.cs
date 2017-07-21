@@ -17,11 +17,11 @@ namespace DragonLore.Modules
     private readonly SaveLoadService _saveLoadService;
     private readonly IBotMessageManager _botMessage;
 
-    public AdminModule(IServiceProvider map)
+    public AdminModule(Settings settings, SaveLoadService saveLoadService, IBotMessageManager botMessage)
     {
-      _settings = map.GetService<Settings>();
-      _saveLoadService = map.GetService<SaveLoadService>();
-      _botMessage = map.GetService<IBotMessageManager>();
+      _settings = settings;
+      _saveLoadService = saveLoadService;
+      _botMessage = botMessage;
     }
 
     [Command("Settings", RunMode = RunMode.Async)]

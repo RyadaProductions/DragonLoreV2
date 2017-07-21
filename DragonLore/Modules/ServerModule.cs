@@ -19,10 +19,10 @@ namespace DragonLore.Modules
     private readonly Settings _settings;
     private readonly IBotMessageManager _botMessage;
 
-    public ServerModule(IServiceProvider map)
+    public ServerModule(Settings settings, IBotMessageManager botMessage)
     {
-      _settings = map.GetService<Settings>();
-      _botMessage = map.GetService<IBotMessageManager>();
+      _settings = settings;
+      _botMessage = botMessage;
     }
 
     [Command("RegisterServer", RunMode = RunMode.Async)]

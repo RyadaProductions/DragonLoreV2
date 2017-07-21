@@ -17,11 +17,11 @@ namespace DragonLore.Modules
     private readonly IBotMessageManager _botMessage;
     private readonly IServiceProvider _map;
 
-    public HelpModule(IServiceProvider map)
+    public HelpModule(Settings settings, CommandService commandService, IBotMessageManager botMessage, IServiceProvider map)
     {
-      _settings = map.GetService<Settings>();
-      _commandService = map.GetService<CommandService>();
-      _botMessage = map.GetService<IBotMessageManager>();
+      _settings = settings;
+      _commandService = commandService;
+      _botMessage = botMessage;
       _map = map;
     }
 
@@ -71,7 +71,6 @@ namespace DragonLore.Modules
         x.Value = "Please use all commands inside the CSHub discord, since I won't reply or react to DM's";
       });
       await _botMessage.DirectMessageUserAsync("", user, embed: builder.Build());
-
       var messageContext = "Send you a DM <:csgochicken:306772928626950146> ";
       await _botMessage.SendAndRemoveEmbed(messageContext, Context);
     }

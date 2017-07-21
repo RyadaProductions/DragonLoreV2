@@ -11,9 +11,9 @@ namespace DragonLore.Modules
   {
     private readonly IBotMessageManager _botMessage;
 
-    public FunModule(IServiceProvider map)
+    public FunModule(IBotMessageManager botMessage)
     {
-      _botMessage = map.GetService<IBotMessageManager>();
+      _botMessage = botMessage;
     }
 
     [Command("Fail", RunMode = RunMode.Async)]
