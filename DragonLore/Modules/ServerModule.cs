@@ -37,7 +37,7 @@ namespace DragonLore.Modules
       {
         var stopwatch = new Stopwatch();
         stopwatch.Start();
-        var serverInfo = await new CsgoServerService(_settings).GetServerInfo(ip);
+        var serverInfo = await new CsgoServerService().GetServerInfo(ip);
         stopwatch.Stop();
         var ping = stopwatch.ElapsedMilliseconds;
 
@@ -93,7 +93,7 @@ namespace DragonLore.Modules
         {
           var stopwatch = new Stopwatch();
           stopwatch.Start();
-          var serverInfo = await new CsgoServerService(_settings).GetServerInfo(serverIP);
+          var serverInfo = await new CsgoServerService().GetServerInfo(serverIP);
           stopwatch.Stop();
           var ping = stopwatch.ElapsedMilliseconds;
 

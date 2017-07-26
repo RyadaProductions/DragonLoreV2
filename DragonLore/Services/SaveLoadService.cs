@@ -38,7 +38,7 @@ namespace DragonLore.Services
 
         var Tasks = _settings.Servers.Select(async (ip) =>
         {
-          ServerQueryInfo info = await new CsgoServerService(_settings).GetServerInfo(ip);
+          ServerQueryInfo info = await new CsgoServerService().GetServerInfo(ip);
           if (info != null && !_settings.Servers.Contains(ip))
           {
             serversToAdd.Add(ip);

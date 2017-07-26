@@ -9,11 +9,8 @@ namespace DragonLore.Services
 {
   public class CsgoServerService
   {
-    private readonly Settings _settings;
-
-    public CsgoServerService(Settings settings)
+    public CsgoServerService()
     {
-      _settings = settings;
     }
 
     public async Task<ServerQueryInfo> GetServerInfo(string ip)
