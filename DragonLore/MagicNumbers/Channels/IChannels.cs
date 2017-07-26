@@ -5,5 +5,6 @@
     ulong NewsChannel { get; }
     ulong AdminChannel { get; }
     ulong MusicChannel { get; }
+    ulong UpcomingMatchesChannel { get; }
   }
 }

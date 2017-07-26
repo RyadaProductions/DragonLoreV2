@@ -3,6 +3,8 @@ using Discord;
 using Discord.Commands;
 using Discord.Rest;
 using Discord.WebSocket;
+using DragonLore.Models.Matches;
+using System;
 using System.Threading.Tasks;
 
 namespace DragonLore.Managers
@@ -17,7 +19,7 @@ namespace DragonLore.Managers
 
     public async Task DirectMessageUserEmbedAsync(string messageContent, SocketUser user)
     {
-      var embed = GenerateEmbedAsync(messageContent);
+      var embed = GenerateEmbed(messageContent);
       await user.SendMessageAsync("", embed: embed);
     }
 
@@ -43,66 +45,61 @@ namespace DragonLore.Managers
       // Wait 5 seconds before deleting
       await Task.Delay(5000);
       await message.DeleteAsync();
-
-      if (botmessage != null) await botmessage.DeleteAsync();
+      await botmessage.DeleteAsync();
     }
 
-    public async Task SendAndRemoveEmbed(string messageContent, SocketCommandContext Context)
+    public async Task SendAndRemoveEmbedAsync(string messageContent, SocketCommandContext Context)
     {
-      var embed = GenerateEmbedAsync(messageContent);
+      var embed = GenerateEmbed(messageContent);
       var message = await DirectMessageChannelAsync("", Context.Channel, embed);
       await RemoveCommandAndBotMessageAsync(Context.Message, Context.Channel, message);
     }
 
-    public async Task SendAndRemoveEmbed(string messageContent, SocketCommandContext Context, IGuildUser user)
+    public async Task SendAndRemoveEmbedAsync(string messageContent, SocketCommandContext Context, IGuildUser user)
     {
-      var embed = GenerateEmbedAsync(user, messageContent);
+      var embed = GenerateEmbed(user, messageContent);
       var message = await DirectMessageChannelAsync("", Context.Channel, embed);
       await RemoveCommandAndBotMessageAsync(Context.Message, Context.Channel, message);
     }
 
-    public async Task SendEmbedAndRemoveCommand(string messageContent, SocketCommandContext Context, IGuildUser user)
+    public async Task SendEmbedAndRemoveCommandAsync(string messageContent, SocketCommandContext Context, IGuildUser user)
     {
-      var embed = GenerateEmbedAsync(user, messageContent);
+      var embed = GenerateEmbed(user, messageContent);
       await DirectMessageChannelAsync("", Context.Channel, embed);
       await RemoveCommandMessageAsync(Context.Message, Context.Channel);
     }
 
-    public async Task SendNewsEmbed(string source, FeedItem newsItem, ISocketMessageChannel channel)
+    public async Task SendNewsEmbedAsync(string source, FeedItem newsItem, ISocketMessageChannel channel)
     {
-      var embed = GenerateNewsEmbedAsync(newsItem, source);
+      var embed = GenerateNewsEmbed(newsItem, source);
       await DirectMessageChannelAsync("", channel, embed);
     }
 
-    public Embed GenerateEmbedAsync(string message)
+    public Embed GenerateEmbed(string message)
     {
-      Embed embed = new EmbedBuilder()
-                .WithColor(new Color(9912378))
+      var embed = new EmbedBuilder()
+                .WithColor(Color.Gold)
                 .WithDescription(message);
       return embed;
     }
 
-    public Embed GenerateEmbedAsync(IGuildUser user, string message)
+    public Embed GenerateEmbed(IGuildUser user, string message)
     {
-      Embed embed = new EmbedBuilder()
-               .WithAuthor(new EmbedAuthorBuilder()
-                .WithName(user.Username)
-                .WithIconUrl(user.GetAvatarUrl()))
-               .WithColor(new Color(9912378))
+      var embed = new EmbedBuilder()
+               .WithAuthor(user)
+               .WithColor(Color.Gold)
                .WithDescription(message);
       return embed;
     }
 
-    public Embed GenerateNewsEmbedAsync(FeedItem newsItem, string source)
+    public Embed GenerateNewsEmbed(FeedItem newsItem, string source)
     {
-      EmbedBuilder embed = new EmbedBuilder();
-      embed.WithColor(new Color(9912378));
-      embed.WithAuthor(new EmbedAuthorBuilder()
-        .WithName(source));
-      embed.WithTitle(newsItem.Title);
-      embed.WithUrl(newsItem.Link);
-      embed.WithFooter(new EmbedFooterBuilder()
-        .WithText(newsItem.PublishingDateString));
+      var embed = new EmbedBuilder()
+               .WithColor(Color.Gold)
+               .WithAuthor(source)
+               .WithTitle(newsItem.Title)
+               .WithUrl(newsItem.Link)
+               .WithFooter(newsItem.PublishingDateString);
 
       //check the source so we know what to do with the Content of the News
       switch (source)
@@ -126,11 +123,23 @@ namespace DragonLore.Managers
           if (description.Length > 1700)
           {
             description = newsItem.Description.Substring(0, 1700);
-            description += "\n Press the title to see the full patchnotes";
+            description += $"{Environment.NewLine}Press the title to see the full patchnotes";
           }
           embed.WithDescription(description);
           break;
       }
+
+      return embed;
+    }
+
+    public Embed GenerateUpcomingMatchesEmbed(Day matchDay) {
+
+      var embed = new EmbedBuilder()
+        .WithTitle(matchDay.Headline)
+        .WithColor(Color.Gold);
+
+      foreach (Match match in matchDay.Matches)
+        embed.AddField(match.TeamA.Name + " vs " + match.TeamB.Name, match);
 
       return embed;
     }

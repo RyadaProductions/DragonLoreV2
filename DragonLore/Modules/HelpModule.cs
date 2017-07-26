@@ -32,10 +32,8 @@ namespace DragonLore.Modules
       var user = Context.Message.Author;
       // Check if the user has any rank registered to him from the List<>ranks and remove them.
       var builder = new EmbedBuilder()
-      {
-        Color = new Color(9912378),
-        Description = "These are the commands you can use:"
-      };
+        .WithColor(Color.Gold)
+        .WithDescription("These are the commands you can use:");
 
       foreach (var module in _commandService.Modules)
       {
@@ -47,11 +45,12 @@ namespace DragonLore.Modules
           if (result.IsSuccess)
           {
             if (cmd.Parameters.Count > 0)
-              description.Append($"!{cmd.Aliases.First()} `{string.Join("`, `", cmd.Parameters.Select(p => p.Name))}`\n");
+              description.AppendLine($"!{cmd.Aliases.First()} `{string.Join("`, `", cmd.Parameters.Select(p => p.Name))}`");
             else
-              description.Append($"!{cmd.Aliases.First()}\n");
+              description.AppendLine($"!{cmd.Aliases.First()}");
           }
         }
+
         if (description.Length >= 0)
         {
           builder.AddField(x =>
@@ -62,14 +61,17 @@ namespace DragonLore.Modules
           });
         }
       }
+
       builder.AddField(x =>
       {
         x.Name = "Where can I use those commands?";
         x.Value = "Please use all commands inside the CSHub discord, since I won't reply or react to DM's";
       });
+
       await _botMessage.DirectMessageUserAsync("", user, embed: builder.Build());
+
       var messageContext = "Send you a DM <:csgochicken:306772928626950146> ";
-      await _botMessage.SendAndRemoveEmbed(messageContext, Context);
+      await _botMessage.SendAndRemoveEmbedAsync(messageContext, Context);
     }
 
     [Command("Info", RunMode = RunMode.Async)]
@@ -77,15 +79,17 @@ namespace DragonLore.Modules
     public async Task Info()
     {
       var Uptime = DateTime.Now - Process.GetCurrentProcess().StartTime;
-      StringBuilder messageBuilder = new StringBuilder();
-      messageBuilder.Append("**Name:** Dragon Lore *version 2.0*\n");
-      messageBuilder.Append($"**Uptime:** {Uptime.Days} Days, {Uptime.Hours} Hours, {Uptime.Minutes} Minutes, {Uptime.Seconds} Seconds.\n");
-      messageBuilder.Append($"**Discord Servers:** {_settings.Client.Guilds.Count}\n");
-      messageBuilder.Append($"**Latency:** {_settings.Client.Latency}ms\n");
-      messageBuilder.Append($"**Memory Usage:** {(Process.GetCurrentProcess().PrivateMemorySize64 / 1024) / 1024}MB\n");
-      messageBuilder.Append($"**Discord.NET version:** 1.0.1\n");
-      messageBuilder.Append($"**Developer:** Ryada");
-      await _botMessage.SendAndRemoveEmbed(messageBuilder.ToString(), Context);
+
+      StringBuilder messageBuilder = new StringBuilder()
+              .AppendLine("**Name:** Dragon Lore *version 2.0*")
+              .AppendLine($"**Uptime:** {Uptime.Days} Days, {Uptime.Hours} Hours, {Uptime.Minutes} Minutes, {Uptime.Seconds} Seconds.")
+              .AppendLine($"**Discord Servers:** {_settings.Client.Guilds.Count}")
+              .AppendLine($"**Latency:** {_settings.Client.Latency}ms")
+              .AppendLine($"**Memory Usage:** {(Process.GetCurrentProcess().PrivateMemorySize64 / 1024) / 1024}MB")
+              .AppendLine($"**Discord.NET version:** 1.0.1")
+              .AppendLine($"**Developer:** Ryada");
+
+      await _botMessage.SendAndRemoveEmbedAsync(messageBuilder.ToString(), Context);
     }
   }
 }

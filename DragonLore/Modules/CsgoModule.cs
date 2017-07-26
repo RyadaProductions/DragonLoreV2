@@ -4,6 +4,7 @@ using DragonLore.MagicNumbers.Roles;
 using DragonLore.Managers;
 using DragonLore.Models;
 using Newtonsoft.Json;
+using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -35,9 +36,9 @@ namespace DragonLore.Modules
 
         var inventoryData = JsonConvert.DeserializeObject<Inventory>(jsonContent);
         messageContent = inventoryData.Success ?
-          $"**Player:** {steamID}\n**Inventory value:** {inventoryData.Value} {inventoryData.Currency}\n**Items:** {inventoryData.Items}" :
-          "**Error** \nAre you sure you entered a correct steamID?\nYou can get your steamID from your profile url.";
-        await _botMessage.SendAndRemoveEmbed(messageContent, Context, user);
+          $"**Player:** {steamID}{Environment.NewLine}**Inventory value:** {inventoryData.Value} {inventoryData.Currency}{Environment.NewLine}**Items:** {inventoryData.Items}" :
+          $"**Error** {Environment.NewLine}Are you sure you entered a correct steamID?{Environment.NewLine}You can get your steamID from your profile url.";
+        await _botMessage.SendAndRemoveEmbedAsync(messageContent, Context, user);
       }
     }
 
@@ -72,10 +73,10 @@ namespace DragonLore.Modules
           break;
 
         default:
-          messageContent = "**Error** \nMake sure you specify if you want to put the FaceIt role on or off.";
+          messageContent = $"**Error**{Environment.NewLine}Make sure you specify if you want to put the FaceIt role on or off.";
           break;
       }
-      await _botMessage.SendAndRemoveEmbed(messageContent, Context, user);
+      await _botMessage.SendAndRemoveEmbedAsync(messageContent, Context, user);
     }
 
     [Command("Esea", RunMode = RunMode.Async)]
@@ -109,10 +110,10 @@ namespace DragonLore.Modules
           break;
 
         default:
-          messageContent = "**Error** \nMake sure you specify if you want to put the ESEA role on or off.";
+          messageContent = $"**Error**{Environment.NewLine}Make sure you specify if you want to put the ESEA role on or off.";
           break;
       }
-      await _botMessage.SendAndRemoveEmbed(messageContent, Context, user);
+      await _botMessage.SendAndRemoveEmbedAsync(messageContent, Context, user);
     }
   }
 }

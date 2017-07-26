@@ -29,7 +29,7 @@ namespace DragonLore.Services
 
       if (_settings.LastRSS[rss] != newestId)
       {
-        await _botMessage.SendNewsEmbed(source, newsItem, channel);
+        await _botMessage.SendNewsEmbedAsync(source, newsItem, channel);
         _settings.LastRSS[rss] = newestId;
         _saveLoadService.SaveVars();
       }

@@ -7,5 +7,7 @@
     public ulong AdminChannel => 278508918534045696;
 
     public ulong MusicChannel => 331387084181078017;
+
+    public ulong UpcomingMatchesChannel => 280625010337513475;
   }
 }

@@ -3,6 +3,7 @@ using DragonLore.Managers;
 using DragonLore.Models;
 using DragonLore.PreConditions;
 using DragonLore.Services;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -44,13 +45,13 @@ namespace DragonLore.Modules
         {
           _settings.Servers = _settings.Servers.Concat(new[] { ip });
 
-          messageContent = $"**{serverInfo.Name}**\n has successfully been added to the server list. \n `ip: {ip}` || `ping: {ping}ms`";
+          messageContent = $"**{serverInfo.Name}**{Environment.NewLine} has successfully been added to the server list.{Environment.NewLine}`ip: {ip}` || `ping: {ping}ms`";
         }
         else
           messageContent = "Could not add server, no valid ip given";
       }
 
-      await _botMessage.SendAndRemoveEmbed(messageContent, Context);
+      await _botMessage.SendAndRemoveEmbedAsync(messageContent, Context);
     }
 
     [Command("RemoveServer", RunMode = RunMode.Async)]
@@ -69,7 +70,7 @@ namespace DragonLore.Modules
       else
         messageContent = $"{ip} is not registered";
 
-      await _botMessage.SendAndRemoveEmbed(messageContent, Context);
+      await _botMessage.SendAndRemoveEmbedAsync(messageContent, Context);
     }
 
     [Command("Servers", RunMode = RunMode.Async)]
@@ -98,13 +99,13 @@ namespace DragonLore.Modules
 
           if (serverInfo != null)
           {
-            var serverString = new StringBuilder($"**{serverInfo.Name}**\n `ip: {serverIP}` || `Ping: {ping}ms` || `Players: {serverInfo.Players}/{serverInfo.MaxPlayers}` || `Map: {serverInfo.Map}`\n");
-            serverString.Append($"[Click here to join the server.](steam://connect/{serverIP})\n");
+            var serverString = new StringBuilder($"**{serverInfo.Name}**{Environment.NewLine} `ip: {serverIP}` || `Ping: {ping}ms` || `Players: {serverInfo.Players}/{serverInfo.MaxPlayers}` || `Map: {serverInfo.Map}`{Environment.NewLine}");
+            serverString.Append($"[Click here to join the server.](steam://connect/{serverIP}){Environment.NewLine}");
             onlineServerList.Add(serverString.ToString());
           }
           else
           {
-            offlineServerList.Add($"`ip: {serverIP}` || `Status: Offline`\n");
+            offlineServerList.Add($"`ip: {serverIP}` || `Status: Offline`{Environment.NewLine}");
           }
           return true;
         });
@@ -112,9 +113,9 @@ namespace DragonLore.Modules
         await Task.WhenAll(Tasks);
 
         var serverList = new List<string>();
-        serverList.Add("**Online Servers:**\n\n");
+        serverList.Add($"**Online Servers:**{Environment.NewLine}{Environment.NewLine}");
         serverList.AddRange(onlineServerList);
-        serverList.Add("\n**Offline Servers:**\n\n");
+        serverList.Add($"{Environment.NewLine}**Offline Servers:**{Environment.NewLine}{Environment.NewLine}");
         serverList.AddRange(offlineServerList);
 
         var count = 0;

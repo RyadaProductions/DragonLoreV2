@@ -3,6 +3,7 @@ using Discord.WebSocket;
 using DragonLore.MagicNumbers.Roles;
 using DragonLore.Managers;
 using DragonLore.Models;
+using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,13 +30,13 @@ namespace DragonLore.Modules
       // Check if parameter has been defined if not stop instantly to avoid doing useless things.
       if (_settings.Ranks.Any())
       {
-        await _botMessage.SendAndRemoveEmbed("No ranks have been registered, please contact ryada.", Context);
+        await _botMessage.SendAndRemoveEmbedAsync("No ranks have been registered, please contact ryada.", Context);
         return;
       }
 
       if (newRank == null)
       {
-        await _botMessage.SendAndRemoveEmbed("No rank has been entered. You can set your rank like this: `!rank GN3`", Context);
+        await _botMessage.SendAndRemoveEmbedAsync("No rank has been entered. You can set your rank like this: `!rank GN3`", Context);
         return;
       }
 
@@ -46,7 +47,7 @@ namespace DragonLore.Modules
       var newRole = _settings.Ranks.FirstOrDefault(x => x.Name.ToLower() == newRank.ToLower());
       if (newRole == null)
       {
-        await _botMessage.SendAndRemoveEmbed($"{newRank} does not exist", Context);
+        await _botMessage.SendAndRemoveEmbedAsync($"{newRank} does not exist", Context);
         return;
       }
 
@@ -67,10 +68,10 @@ namespace DragonLore.Modules
         await user.AddRoleAsync(newRole);
         await user.RemoveRoleAsync(oldRole);
 
-        await _botMessage.SendAndRemoveEmbed($"is now {newRole.Name}", Context, user);
+        await _botMessage.SendAndRemoveEmbedAsync($"is now {newRole.Name}", Context, user);
       }
       else
-        await _botMessage.SendAndRemoveEmbed($"is already {newRole.Name}", Context, user);
+        await _botMessage.SendAndRemoveEmbedAsync($"is already {newRole.Name}", Context, user);
     }
 
     [Command("Unrank", RunMode = RunMode.Async)]
@@ -91,7 +92,7 @@ namespace DragonLore.Modules
       else
         messageContent = "is already unranked";
 
-      await _botMessage.SendAndRemoveEmbed(messageContent, Context, user);
+      await _botMessage.SendAndRemoveEmbedAsync(messageContent, Context, user);
     }
 
     [Command("ListRanks", RunMode = RunMode.Async)]
@@ -109,13 +110,13 @@ namespace DragonLore.Modules
 
         foreach (var role in _settings.Ranks)
         {
-          rankList.Append($"- **{role.Name}**: {role.Members.Count()} \n");
+          rankList.AppendLine($"- **{role.Name}**: {role.Members.Count()}");
         }
 
-        messageContent = $"**Ranks:** \n \n {rankList} \n You can set your rank with **!rank [rankname]**";
+        messageContent = $"**Ranks:**{Environment.NewLine}{Environment.NewLine}{rankList}{Environment.NewLine}You can set your rank with **!rank [rankname]**";
       }
 
-      await _botMessage.SendAndRemoveEmbed(messageContent, Context);
+      await _botMessage.SendAndRemoveEmbedAsync(messageContent, Context);
     }
   }
 }

@@ -3,6 +3,7 @@ using Discord;
 using Discord.Commands;
 using Discord.Rest;
 using Discord.WebSocket;
+using DragonLore.Models.Matches;
 using System.Threading.Tasks;
 
 namespace DragonLore.Managers
@@ -21,18 +22,20 @@ namespace DragonLore.Managers
 
     Task RemoveCommandAndBotMessageAsync(SocketMessage message, ISocketMessageChannel channel, RestUserMessage botmessage = null);
 
-    Task SendAndRemoveEmbed(string messageContent, SocketCommandContext Context);
+    Task SendAndRemoveEmbedAsync(string messageContent, SocketCommandContext Context);
 
-    Task SendAndRemoveEmbed(string messageContent, SocketCommandContext Context, IGuildUser user);
+    Task SendAndRemoveEmbedAsync(string messageContent, SocketCommandContext Context, IGuildUser user);
 
-    Task SendEmbedAndRemoveCommand(string messageContent, SocketCommandContext Context, IGuildUser user);
+    Task SendEmbedAndRemoveCommandAsync(string messageContent, SocketCommandContext Context, IGuildUser user);
 
-    Task SendNewsEmbed(string source, FeedItem newsItem, ISocketMessageChannel channel);
+    Task SendNewsEmbedAsync(string source, FeedItem newsItem, ISocketMessageChannel channel);
 
-    Embed GenerateEmbedAsync(string message);
+    Embed GenerateEmbed(string message);
 
-    Embed GenerateEmbedAsync(IGuildUser user, string message);
+    Embed GenerateEmbed(IGuildUser user, string message);
 
-    Embed GenerateNewsEmbedAsync(FeedItem newsItem, string source);
-  }
+    Embed GenerateNewsEmbed(FeedItem newsItem, string source);
+
+    Embed GenerateUpcomingMatchesEmbed(Day matchDay);
+    }
 }

@@ -6,6 +6,7 @@ using DragonLore.Managers;
 using DragonLore.Models;
 using DragonLore.Rss;
 using DragonLore.Services;
+using DragonLore.UpcomingMatches;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
@@ -46,8 +47,9 @@ namespace DragonLore.Main
         await _logManager.Logger(new LogMessage(LogSeverity.Warning, "Settings", "Error loading Settings, this is normal if it is a fresh installation."));
 
       IRssReader mainRSS = new RssReader(_map.GetService<RssService>(), _logManager);
+      HltvParser mainParser = new HltvParser(_settings, _channels, _botMessage);
 
-      //_settings.Client.Connected -= Connected;
+      _settings.Client.GuildAvailable -= ConnectedToGuild;
     }
 
     public async Task WelcomeHandler(SocketGuildUser arg)

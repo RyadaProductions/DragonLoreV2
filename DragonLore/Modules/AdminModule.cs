@@ -5,6 +5,7 @@ using DragonLore.Managers;
 using DragonLore.Models;
 using DragonLore.PreConditions;
 using DragonLore.Services;
+using System;
 using System.Threading.Tasks;
 
 namespace DragonLore.Modules
@@ -44,7 +45,7 @@ namespace DragonLore.Modules
           break;
       }
 
-      await _botMessage.SendAndRemoveEmbed(messageContent, Context);
+      await _botMessage.SendAndRemoveEmbedAsync(messageContent, Context);
     }
 
     [Command("Kick", RunMode = RunMode.Async)]
@@ -54,12 +55,12 @@ namespace DragonLore.Modules
     {
       var user = Context.Message.Author as SocketGuildUser;
 
-      var embed = _botMessage.GenerateEmbedAsync($"You have been kicked from: {Context.Guild.Name}\nBy:{user.Username}\nReason:\n{reason}");
+      var embed = _botMessage.GenerateEmbed($"You have been kicked from: {Context.Guild.Name}{Environment.NewLine}By:{user.Username}\nReason:{Environment.NewLine}{reason}");
       await _botMessage.DirectMessageUserAsync("", username as SocketUser, embed);
 
       await username.KickAsync(reason);
 
-      await _botMessage.SendEmbedAndRemoveCommand($"has kicked { username.Username}\nReason: { reason}", Context, user);
+      await _botMessage.SendEmbedAndRemoveCommandAsync($"has kicked { username.Username}{Environment.NewLine}Reason: { reason}", Context, user);
     }
 
     [Command("Ban", RunMode = RunMode.Async)]
@@ -69,12 +70,12 @@ namespace DragonLore.Modules
     {
       var user = Context.Message.Author as SocketGuildUser;
 
-      var embed = _botMessage.GenerateEmbedAsync($"You have been banned from: **{Context.Guild.Name}**\n**By:** {user.Username}\n**Reason:**\n{reason}");
+      var embed = _botMessage.GenerateEmbed($"You have been banned from: **{Context.Guild.Name}**{Environment.NewLine}**By:** {user.Username}{Environment.NewLine}**Reason:**{Environment.NewLine}{reason}");
       await _botMessage.DirectMessageUserAsync("", username as SocketUser, embed);
 
       await Context.Guild.AddBanAsync(username, 1, reason);
 
-      await _botMessage.SendEmbedAndRemoveCommand($"has banned: {username.Username}\n**Reason:** {reason}", Context, user);
+      await _botMessage.SendEmbedAndRemoveCommandAsync($"has banned: {username.Username}{Environment.NewLine}**Reason:** {reason}", Context, user);
     }
 
     [Command("Welcomemessage", RunMode = RunMode.Async)]
@@ -88,11 +89,11 @@ namespace DragonLore.Modules
       if (welcomeMessage != "")
       {
         _settings.WelcomeMessage = welcomeMessage;
-        messageContent = $"Welcome message has been set to:\n`{welcomeMessage}`";
+        messageContent = $"Welcome message has been set to:{Environment.NewLine}`{welcomeMessage}`";
       }
-      else messageContent = $"Current welcome message:\n`{_settings.WelcomeMessage}`";
+      else messageContent = $"Current welcome message:{Environment.NewLine}`{_settings.WelcomeMessage}`";
 
-      await _botMessage.SendAndRemoveEmbed(messageContent, Context, user);
+      await _botMessage.SendAndRemoveEmbedAsync(messageContent, Context, user);
     }
 
     [Command("Welcome", RunMode = RunMode.Async)]
@@ -120,7 +121,7 @@ namespace DragonLore.Modules
           break;
       }
 
-      await _botMessage.SendAndRemoveEmbed(messageContent, Context, user);
+      await _botMessage.SendAndRemoveEmbedAsync(messageContent, Context, user);
     }
   }
 }
