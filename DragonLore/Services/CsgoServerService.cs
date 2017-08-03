@@ -1,6 +1,5 @@
 ﻿using CoreRCON;
 using CoreRCON.PacketFormats;
-using DragonLore.Models;
 using System;
 using System.Net;
 using System.Threading.Tasks;

@@ -12,7 +12,6 @@ namespace DragonLore.Rss
   {
     private readonly RssService _service;
     private readonly LogManager _logManager;
-
     private readonly Timer _rssTimer;
 
     private string _rss = "gosu";

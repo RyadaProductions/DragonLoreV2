@@ -1,10 +1,8 @@
-﻿using CoreRCON.PacketFormats;
-using DragonLore.Models;
+﻿using DragonLore.Models;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace DragonLore.Services
 {
@@ -20,7 +18,7 @@ namespace DragonLore.Services
       _settings = settings;
     }
 
-    public async Task<bool> LoadVarsAsync()
+    public bool LoadVarsAsync()
     {
       try
       {
@@ -29,24 +27,12 @@ namespace DragonLore.Services
           SaveVars();
         }
 
-        string input = File.ReadAllText(_saveFile);
+        var input = File.ReadAllText(_saveFile);
         var service = JsonConvert.DeserializeObject<Serializing>(input);
 
         _settings.Ranks = _settings.Client.Guilds.First().Roles.Where(gRole => _roles.Contains(gRole.Name));
 
-        var serversToAdd = new List<string>();
-
-        var Tasks = _settings.Servers.Select(async (ip) =>
-        {
-          ServerQueryInfo info = await new CsgoServerService().GetServerInfo(ip);
-          if (info != null && !_settings.Servers.Contains(ip))
-          {
-            serversToAdd.Add(ip);
-          }
-        });
-        await Task.WhenAll(Tasks);
-
-        _settings.Servers = serversToAdd;
+        _settings.Servers = service.Servers;
 
         _settings.IsWelcomeMessageOn = service.WelcomeBool;
         _settings.WelcomeMessage = service.WelcomeMessage;
@@ -66,7 +52,7 @@ namespace DragonLore.Services
     {
       try
       {
-        Serializing temp = new Serializing()
+        var temp = new Serializing()
         {
           Servers = _settings.Servers,
           WelcomeBool = _settings.IsWelcomeMessageOn,

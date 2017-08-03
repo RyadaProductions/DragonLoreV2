@@ -41,13 +41,13 @@ namespace DragonLore.Main
 
     public async Task ConnectedToGuild(SocketGuild arg)
     {
-      if (await _saveLoadService.LoadVarsAsync())
+      if (_saveLoadService.LoadVarsAsync())
         await _logManager.Logger(new LogMessage(LogSeverity.Info, "Settings", "Settings loaded succesfully."));
       else
         await _logManager.Logger(new LogMessage(LogSeverity.Warning, "Settings", "Error loading Settings, this is normal if it is a fresh installation."));
 
       IRssReader mainRSS = new RssReader(_map.GetService<RssService>(), _logManager);
-      HltvParser mainParser = new HltvParser(_settings, _channels, _botMessage);
+      var mainParser = new HltvParser(_settings, _channels, _botMessage);
 
       _settings.Client.GuildAvailable -= ConnectedToGuild;
     }

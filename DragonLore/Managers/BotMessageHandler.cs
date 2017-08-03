@@ -132,8 +132,8 @@ namespace DragonLore.Managers
       return embed;
     }
 
-    public Embed GenerateUpcomingMatchesEmbed(Day matchDay) {
-
+    public Embed GenerateUpcomingMatchesEmbed(Day matchDay)
+    {
       var embed = new EmbedBuilder()
         .WithTitle(matchDay.Headline)
         .WithColor(Color.Gold);

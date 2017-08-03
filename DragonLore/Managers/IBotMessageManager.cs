@@ -37,5 +37,5 @@ namespace DragonLore.Managers
     Embed GenerateNewsEmbed(FeedItem newsItem, string source);
 
     Embed GenerateUpcomingMatchesEmbed(Day matchDay);
-    }
+  }
 }

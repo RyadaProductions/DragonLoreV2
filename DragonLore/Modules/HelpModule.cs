@@ -37,7 +37,7 @@ namespace DragonLore.Modules
 
       foreach (var module in _commandService.Modules)
       {
-        StringBuilder description = new StringBuilder();
+        var description = new StringBuilder();
 
         foreach (var cmd in module.Commands)
         {
@@ -80,7 +80,7 @@ namespace DragonLore.Modules
     {
       var Uptime = DateTime.Now - Process.GetCurrentProcess().StartTime;
 
-      StringBuilder messageBuilder = new StringBuilder()
+      var messageBuilder = new StringBuilder()
               .AppendLine("**Name:** Dragon Lore *version 2.0*")
               .AppendLine($"**Uptime:** {Uptime.Days} Days, {Uptime.Hours} Hours, {Uptime.Minutes} Minutes, {Uptime.Seconds} Seconds.")
               .AppendLine($"**Discord Servers:** {_settings.Client.Guilds.Count}")

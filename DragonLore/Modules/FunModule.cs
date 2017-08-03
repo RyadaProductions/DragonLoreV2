@@ -20,8 +20,8 @@ namespace DragonLore.Modules
     public async Task Fail()
     {
       string filePath = "";
-      Random test = new Random();
-      switch (test.Next(3))
+      var randomNumber = new Random();
+      switch (randomNumber.Next(3))
       {
         case 0:
           filePath = Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Gifs", "Fail", "FeFailNade.gif");
