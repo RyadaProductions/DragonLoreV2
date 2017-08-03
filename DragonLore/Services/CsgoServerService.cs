@@ -12,7 +12,7 @@ namespace DragonLore.Services
     {
     }
 
-    public async Task<ServerQueryInfo> GetServerInfo(string ip)
+    public async Task<SourceQueryInfo> GetServerInfo(string ip)
     {
       ushort port = 27015;
       if (ip.Contains(":"))
@@ -23,7 +23,7 @@ namespace DragonLore.Services
 
       try
       {
-        return await ServerQuery.Info(IPAddress.Parse(ip), port);
+        return await ServerQuery.Info(IPAddress.Parse(ip), port, ServerQuery.ServerType.Source) as SourceQueryInfo;
       }
       catch
       {

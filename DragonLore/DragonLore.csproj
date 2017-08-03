@@ -17,8 +17,8 @@
 
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.9.9" />
-    <PackageReference Include="CodeHollow.FeedReader" Version="1.1.0" />
-    <PackageReference Include="CoreRCON" Version="2.0.0" />
+    <PackageReference Include="CodeHollow.FeedReader" Version="1.1.0.1" />
+    <PackageReference Include="CoreRCON" Version="3.0.0" />
     <PackageReference Include="Discord.Net" Version="1.0.1" />
   </ItemGroup>
 
