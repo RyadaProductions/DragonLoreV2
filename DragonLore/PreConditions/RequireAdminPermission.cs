@@ -9,19 +9,19 @@ using System.Threading.Tasks;
 
 namespace DragonLore.PreConditions
 {
-  internal class RequireAdminPermission : PreconditionAttribute
-  {
-    public override Task<PreconditionResult> CheckPermissions(ICommandContext context, CommandInfo command, IServiceProvider services)
+    internal class RequireAdminPermission : PreconditionAttribute
     {
-      var _channels = services.GetRequiredService<IChannels>();
-      var _roles = services.GetRequiredService<IRoles>();
+        public override Task<PreconditionResult> CheckPermissions(ICommandContext context, CommandInfo command, IServiceProvider services)
+        {
+            var channels = services.GetRequiredService<IChannels>();
+            var roles = services.GetRequiredService<IRoles>();
 
-      var user = context.Message.Author as SocketGuildUser;
-      if (user == null) return Task.FromResult(PreconditionResult.FromError("This command must be used in a guild."));
+            var user = context.Message.Author as SocketGuildUser;
+            if (user == null) return Task.FromResult(PreconditionResult.FromError("This command must be used in a guild."));
 
-      if (user.Roles.Contains(_roles.Admin))
-        return Task.FromResult(context.Channel.Id == _channels.AdminChannel ? PreconditionResult.FromSuccess() : PreconditionResult.FromError("You are not in a admin channel"));
-      return Task.FromResult(PreconditionResult.FromError("You must be an admin to run this command."));
+            if (user.Roles.Contains(roles.Admin))
+                return Task.FromResult(context.Channel.Id == channels.AdminChannel ? PreconditionResult.FromSuccess() : PreconditionResult.FromError("You are not in a admin channel"));
+            return Task.FromResult(PreconditionResult.FromError("You must be an admin to run this command."));
+        }
     }
-  }
 }

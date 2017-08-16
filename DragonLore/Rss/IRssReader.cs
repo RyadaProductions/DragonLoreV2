@@ -2,8 +2,8 @@
 
 namespace DragonLore.Rss
 {
-  internal interface IRssReader
-  {
-    Task NewsRSSAsync(string name, string url);
-  }
+    internal interface IRssReader
+    {
+        Task NewsRssAsync(string name, string url);
+    }
 }

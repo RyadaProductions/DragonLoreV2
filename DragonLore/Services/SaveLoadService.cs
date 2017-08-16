@@ -3,74 +3,79 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using DragonLore.MagicNumbers.Roles;
 
 namespace DragonLore.Services
 {
-  public class SaveLoadService
-  {
-    private readonly Settings _settings;
-    private readonly List<string> _roles = new List<string>() { "S1", "S2", "S3", "S4", "SE", "SEM", "GN1", "GN2", "GN3", "GNM", "MG1", "MG2", "MGE", "DMG", "LE", "LEM", "SMFC", "Global" };
-    private readonly string _saveFile;
-
-    public SaveLoadService(Settings settings)
+    public class SaveLoadService
     {
-      _saveFile = Path.Combine(Directory.GetCurrentDirectory(), "settings.json");
-      _settings = settings;
-    }
+        private readonly Settings _settings;
+        private readonly List<string> _ranks = new List<string>() { "S1", "S2", "S3", "S4", "SE", "SEM", "GN1", "GN2", "GN3", "GNM", "MG1", "MG2", "MGE", "DMG", "LE", "LEM", "SMFC", "Global" };
+        private readonly string _saveFile;
+        private readonly IRoles _roles;
 
-    public bool LoadVarsAsync()
-    {
-      try
-      {
-        if (!File.Exists(_saveFile))
+        public SaveLoadService(Settings settings, IRoles roles)
         {
-          SaveVars();
+            _saveFile = Path.Combine(Directory.GetCurrentDirectory(), "settings.json");
+            _settings = settings;
+            _roles = roles;
         }
 
-        var input = File.ReadAllText(_saveFile);
-        var service = JsonConvert.DeserializeObject<Serializing>(input);
-
-        _settings.Ranks = _settings.Client.Guilds.First().Roles.Where(gRole => _roles.Contains(gRole.Name));
-
-        _settings.Servers = service.Servers;
-
-        _settings.IsWelcomeMessageOn = service.WelcomeBool;
-        _settings.WelcomeMessage = service.WelcomeMessage;
-
-        _settings.LastRSS["gosu"] = service.LastGosuRss;
-        _settings.LastRSS["hltv"] = service.LastHltvRss;
-        _settings.LastRSS["valve"] = service.LastValveRss;
-        return true;
-      }
-      catch
-      {
-        return false;
-      }
-    }
-
-    public bool SaveVars()
-    {
-      try
-      {
-        var temp = new Serializing()
+        public bool LoadVarsAsync()
         {
-          Servers = _settings.Servers,
-          WelcomeBool = _settings.IsWelcomeMessageOn,
-          WelcomeMessage = _settings.WelcomeMessage,
-          LastGosuRss = _settings.LastRSS["gosu"],
-          LastHltvRss = _settings.LastRSS["hltv"],
-          LastValveRss = _settings.LastRSS["valve"]
-        };
+            try
+            {
+                if (!File.Exists(_saveFile))
+                {
+                    SaveVars();
+                }
 
-        var savableOutput = JsonConvert.SerializeObject(temp);
-        File.WriteAllText(_saveFile, savableOutput);
+                var input = File.ReadAllText(_saveFile);
+                var service = JsonConvert.DeserializeObject<Serializing>(input);
 
-        return true;
-      }
-      catch
-      {
-        return false;
-      }
+                _settings.Ranks = _settings.Client.Guilds.First().Roles.Where(gRole => _ranks.Contains(gRole.Name)).ToList();
+
+                _settings.Servers = service.Servers;
+
+                _settings.IsWelcomeMessageOn = service.WelcomeBool;
+                _settings.WelcomeMessage = service.WelcomeMessage;
+
+                _settings.LastRss["gosu"] = service.LastGosuRss;
+                _settings.LastRss["hltv"] = service.LastHltvRss;
+                _settings.LastRss["valve"] = service.LastValveRss;
+                
+                ((LiveRoles)_roles).GetRoles();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool SaveVars()
+        {
+            try
+            {
+                var temp = new Serializing()
+                {
+                    Servers = _settings.Servers,
+                    WelcomeBool = _settings.IsWelcomeMessageOn,
+                    WelcomeMessage = _settings.WelcomeMessage,
+                    LastGosuRss = _settings.LastRss["gosu"],
+                    LastHltvRss = _settings.LastRss["hltv"],
+                    LastValveRss = _settings.LastRss["valve"]
+                };
+
+                var savableOutput = JsonConvert.SerializeObject(temp);
+                File.WriteAllText(_saveFile, savableOutput);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
-  }
 }

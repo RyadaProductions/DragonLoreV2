@@ -5,35 +5,32 @@ using System.Linq;
 
 namespace DragonLore.MagicNumbers.Roles
 {
-  internal class TestRoles : IRoles
-  {
-    private ulong AdminId => 280703635342622720;
-
-    private ulong MusicId => 331398290421710849;
-
-    private ulong UnrankedId => throw new NotImplementedException();
-
-    private ulong ESEAId => throw new NotImplementedException();
-
-    private ulong FaceItId => throw new NotImplementedException();
-
-    public SocketRole Admin { get; set; }
-    public SocketRole Music { get; set; }
-    public SocketRole Unranked { get; set; }
-    public SocketRole ESEA { get; set; }
-    public SocketRole FaceIt { get; set; }
-
-    public TestRoles(Settings settings)
+    internal class TestRoles : IRoles
     {
-      var client = settings.Client;
+        private ulong AdminId => 280703635342622720;
 
-      if (client.Guilds.Count < 1) return;
+        private ulong MusicId => 331398290421710849;
 
-      Admin = client.Guilds.First().GetRole(AdminId);
-      Music = client.Guilds.First().GetRole(MusicId);
-      //Unranked = client.Guilds.First().GetRole(UnrankedId);
-      //ESEA = client.Guilds.First().GetRole(ESEAId);
-      //FaceIt = client.Guilds.First().GetRole(FaceItId);
+        private ulong EseaId => throw new NotImplementedException();
+
+        private ulong FaceItId => throw new NotImplementedException();
+
+        public SocketRole Admin { get; set; }
+        public SocketRole Music { get; set; }
+        public SocketRole Esea { get; set; }
+        public SocketRole FaceIt { get; set; }
+
+        public TestRoles(Settings settings)
+        {
+            var client = settings.Client;
+
+            if (client.Guilds.Count < 1) return;
+
+            Admin = client.Guilds.First().GetRole(AdminId);
+            Music = client.Guilds.First().GetRole(MusicId);
+            //Unranked = client.Guilds.First().GetRole(UnrankedId);
+            //ESEA = client.Guilds.First().GetRole(ESEAId);
+            //FaceIt = client.Guilds.First().GetRole(FaceItId);
+        }
     }
-  }
 }
